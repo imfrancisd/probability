@@ -12,28 +12,48 @@ $tools = & "$PSScriptRoot\buildTools.ps1"
 
 #Create output directory.
 #
-$binDirEpisode02 = Join-Path $PSScriptRoot "\..\bin\IMFaic.Probability\2.0.1"
+$binDir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\2.0.2"
+$objDir = Join-Path $PSScriptRoot "..\obj\IMFaic.Probability\2.0.2"
 
-if (Test-Path $binDirEpisode02) {
-    rmdir -Recurse -Force $binDirEpisode02
+foreach ($directory in @($binDir, $objDir)) {
+    if (Test-Path $directory) {
+        rmdir -Recurse -Force $directory
+    }
+
+    mkdir $directory | out-null
 }
 
-mkdir $binDirEpisode02
 
 
-
-#Compile *.cs files.
-#Compile all *.cs files inside
+#Compile all *.cs files inside Probability\
 #
-#    Probability\
-#    IMFaic.Probability\src\
-#
-#and all of their subfolders.
+& $tools.csc `
+-nologo `
+-out:"$(Join-Path $binDir "Probability.dll")" `
+-recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
+-target:"library" `
+$(&{
+    #Generate a temporary *.cs file that will make
+    #IMFaic.Probability a friend to Probability
+    #
+    $tmp = Join-Path $objDir "ProbabilityFriends.cs"
+    @(
+        "using System.Reflection;",
+        "using System.Runtime.CompilerServices;",
+        "",
+        "[assembly:InternalsVisibleTo(`"IMFaic.Probability`")]"
+    ) | Out-File -FilePath $tmp -Encoding utf8 -Force
+    $tmp
+})
+
+
+
+#Compile all *.cs files inside IMFaic.Probability\src\
 #
 & $tools.csc `
 -main:"IMFaic.Probability.Episode02" `
 -nologo `
--out:"$(Join-Path $binDirEpisode02 "IMFaic.Probability.exe")" `
--recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
+-out:"$(Join-Path $binDir "IMFaic.Probability.exe")" `
 -recurse:"$(Join-Path $PSScriptRoot "..\src\*.cs")" `
+-reference:"$(Join-Path $binDir "Probability.dll")" `
 -target:"exe"
