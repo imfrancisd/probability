@@ -1,55 +1,61 @@
 #requires -version 5
 
+[cmdletbinding()]
+param(
+    [parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $false)]
+    [string]
+    $OutputDirectory
+)
+
 $ErrorActionPreference = "Stop"
+$PSDefaultParameterValues = @{'Disabled' = $true}
 
 
 
 #Create packages directory
 #
-$pkgDir = Join-Path $PSScriptRoot "..\packages"
-
-if (-not (Test-Path $pkgDir)) {
-    mkdir $pkgDir
+if (-not (Test-Path $OutputDirectory)) {
+    mkdir $OutputDirectory
 }
 
 
 
-#Download nuget.exe
-#Download links can be found at https://www.nuget.org/downloads
-#
-$nuget = Join-Path $pkgDir "nuget.exe"
+Write-Verbose "Download nuget.exe (see https://www.nuget.org/downloads)."
 
-if (-not (Test-Path $nuget)) {
+$nuget493 = Join-Path $OutputDirectory "nuget.exe"
+
+if (-not (Test-Path $nuget493) -or (Get-FileHash $nuget493 -Algorithm SHA256).Hash -ne '1051f2053643a9fb5d8bf9ba7cf638164a3118541e90a671442cf3499c9606ef') {
     Invoke-WebRequest `
-    -OutFile $nuget `
-    -Uri "https://dist.nuget.org/win-x86-commandline/v4.9.3/nuget.exe" `
-    -Verbose
+    -OutFile $nuget493 `
+    -Uri "https://dist.nuget.org/win-x86-commandline/v4.9.3/nuget.exe"
+}
 
-    if (-not (Test-Path $nuget)) {
-        throw "Could not get nuget.exe from https://dist.nuget.org/win-x86-commandline/v4.9.3/nuget.exe"
-    }
+if (-not (Test-Path $nuget493) -or (Get-FileHash $nuget493 -Algorithm SHA256).Hash -ne '1051f2053643a9fb5d8bf9ba7cf638164a3118541e90a671442cf3499c9606ef') {
+    throw "Could not download nuget.exe"
 }
 
 
 
-#Download csc.exe
-#Download links can be found at https://www.nuget.org/packages/Microsoft.Net.Compilers
-#
-$csc = Join-Path $pkgDir "microsoft.net.compilers.2.10.0\tools\csc.exe"
-$csi = Join-Path $pkgDir "microsoft.net.compilers.2.10.0\tools\csi.exe"
-$vbc = Join-Path $pkgDir "microsoft.net.compilers.2.10.0\tools\vbc.exe"
+Write-Verbose "Download compilers (see https://www.nuget.org/packages/Microsoft.Net.Compilers)"
 
-if (-not (Test-Path $csc)) {
-    & $nuget install `
+$csc = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\csc.exe"
+$csi = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\csi.exe"
+$vbc = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\vbc.exe"
+
+if (-not ((Test-Path $csc) -and (Test-Path $csi) -and (Test-Path $vbc))) {
+    $(Join-Path $outputdirectory "microsoft.net.compilers.2.10.0") |
+        Where-Object {Test-Path $_} |
+        ForEach-Object {rmdir $_ -Recurse -Force}
+    & $nuget493 install `
     "microsoft.net.compilers" `
-    -OutputDirectory $pkgDir `
+    -OutputDirectory $OutputDirectory `
     -Source "https://api.nuget.org/v3/index.json" `
-    -Verbosity "normal" `
+    -Verbosity "$(if ($VerbosePreference -eq "SilentlyContinue") {"quiet"} else {"normal"})" `
     -Version "2.10.0"
+}
 
-    if (-not (Test-Path $csc)) {
-        throw "Could not get csc.exe from https://www.nuget.org/packages/Microsoft.Net.Compilers/2.10.0"
-    }
+if (-not ((Test-Path $csc) -and (Test-Path $csi) -and (Test-Path $vbc))) {
+    throw "Could not get compilers from https://www.nuget.org/packages/Microsoft.Net.Compilers/2.10.0"
 }
 
 

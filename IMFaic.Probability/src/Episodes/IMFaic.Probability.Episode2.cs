@@ -4,14 +4,19 @@ using Probability;
 
 namespace IMFaic.Probability
 {
-    class Episode02
+    public static class Episode2
     {
-        static void Main()
+        public static void RunProbability()
         {
             Console.WriteLine("Probability");
-
             PseudorandomIsGoodEnough.DoIt();
+            Console.WriteLine("Press Enter to finish");
+            Console.ReadLine();
+        }
 
+        public static void RunIMFaicProbability()
+        {
+            Console.WriteLine("IMFaic.Probability");
             Console.WriteLine("Press Enter to finish");
             Console.ReadLine();
         }
