@@ -86,4 +86,50 @@ _These missions are now really, really iffy._ A mission that is already complete
 
 ## Episode3.14
 
-...
+Agent _\<fill in your name here\>_, the _Episode04 Branch_ of _Impossible Missions Faic_ has become divergent. We cannot confirm what happened because the NOC (non-official cover) list has been compromised. (Yes, I know the plot is confusing, but the visuals are awesome, so just go with it).
+
+We think there might be a mole at the _Impossible Missions Faic_ and we have just intercepted the following message below:
+
+```
+commit 29b5e08e2dbcf7844d4601b129ad5f53bb9b8c32
+Author: Francis de la Cerna <imfrancisd@users.noreply.github.com>
+Date:   Thu Mar 14 03:09:25 2019 -0500
+
+    Message To: Max@Job 3:14
+    Message From: Job
+
+    Max,
+     Branch "episode04" has diverged. Merged from
+    unknown non-official cover "kimsey0". Consider
+    EXTREMELY BENIGN. Do not use.
+     Fate will be that of kings and counsellors of
+    the earth, who built for themselves places now
+    lying in ruins. Must revert merge a.s.a.p.
+```
+
+
+**The Mission**
+
+The mission has not changed. For all episodes, you must still make version \<episode\>.0.0 (without library) or version \<episode\>.1.0 (with library).
+
+However, _Impossible Missions Faic_ have lost sight of their goal of fixing Random. We think the mole is responsible. Because of this, you must now build the API of IMFaic.Probability.dll on your own. You cannot follow the API from Probability.dll. Probability.dll has shifted its focus towards Distribution and away from Random. You can use Distributions in your API, but Random must be the central focus.
+
+I repeat, the central focus of your API must be Random, not Distribution.
+
+
+**Random Begins**
+
+Our original mission was to fix Random. That is still our mission. That will always be our mission.
+
+We think the mole distributed Poisson at _Impossible Missions Faic_ which has far worse effects than Chimera. After one hour of exposure, the victims can no longer distinguish probability from reality. After two hours, they become numerologists! Be careful, and do not get taken in with the web of lies, damned lies, and statistics, that is so rampant in this line of work.
+
+
+**Oh, by the way, you have been disavowed**
+
+But it's cool.
+
+Because what you do have are a very particular set of skills. Skills you have acquired over a very long career. If _Impossible Missions Faic_ fixes Random, that will be the end of it - You will not look for Random, You will not pursue Random... but if they don't, You will look for Random, You will find Random... and You will fix Random.
+
+Good luck.
+
+\<dial tone\>
