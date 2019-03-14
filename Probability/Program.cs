@@ -8,7 +8,9 @@ namespace Probability
         {
             Console.WriteLine("Probability");
             // RandomIsAwful.DoIt();
-            Episode03.DoIt();
+            // Episode03.DoIt();
+            // Episode04.DoIt();
+            Episode05.DoIt();
             Console.WriteLine("Press Enter to finish");
             Console.ReadLine();
         }
