@@ -60,6 +60,29 @@ foreach ($episodeNumber in $Episode) {
         "[assembly:InternalsVisibleTo(`"IMFaic.Probability`")]"
     ) | Out-File -FilePath $probabilityFriendscs -Encoding utf8 -Force
 
+    #Generate a file that will make Probability build with older Dictioary<T>
+    #
+    $probabilityExtensionscs = Join-Path $objDir "ProbabilityExtensions.cs"
+    @(
+        "using System.Collections.Generic;",
+        "",
+        "namespace Probability",
+        "{",
+        "    static class IMFaicProbabilityExtensions",
+        "    {",
+        "        public static TValue GetValueOrDefault<TKey,TValue> (this IDictionary<TKey,TValue> dictionary, TKey key, TValue defaultValue)",
+        "        {",
+        "            TValue value;",
+        "            if (dictionary.TryGetValue(key, out value)) {",
+        "                return value;",
+        "            } else {",
+        "                return defaultValue;",
+        "            }",
+        "        }"
+        "    }",
+        "}"
+    ) | Out-File -FilePath $probabilityExtensionscs -Encoding utf8 -Force
+
     #Generate a file that will run the episode in IMFaic.Probability
     #
     $programcs = Join-Path $objDir "Program.cs"
@@ -82,6 +105,7 @@ foreach ($episodeNumber in $Episode) {
     -out:"$(Join-Path $binDir "Probability.dll")" `
     -recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
     -target:"library" `
+    $probabilityExtensionscs `
     $probabilityFriendscs
 
 
