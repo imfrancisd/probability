@@ -15,6 +15,11 @@ Build all episodes verbosely
 .\buildEpisode.ps1 -Verbose
 ```
 
+```
+#From bash
+./buildEpisode.sh
+```
+
 
 Build some episodes quietly
 ```
@@ -27,3 +32,9 @@ Build some episodes verbosely
 #From powershell.exe
 .\buildEpisode.ps1 -Episode 1, 2, 3 -Verbose
 ```
+
+```
+#From bash
+./buildEpisode.sh 1 2 3
+```
+
