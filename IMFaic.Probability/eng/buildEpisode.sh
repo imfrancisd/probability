@@ -47,17 +47,29 @@ do
 
 
 
+    echo "Compiling Probability.dll"
+
+    csc \
+    -nologo \
+    -out:"${BINDIR}/Probability.dll" \
+    -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
+    -recurse:"${SCRIPTROOT}/../prb/*.cs" \
+    -target:"library"
+
+
+
+    echo "Compiling IMFaic.Probability.dll"
+
+    csc \
+    -nologo \
+    -out:"${BINDIR}/IMFaic.Probability.dll" \
+    -recurse:"${SCRIPTROOT}/../src/*.cs" \
+    -reference:"${BINDIR}/Probability.dll" \
+    -target:"library"
+
+
+
     echo "Generating Source"
-
-    #Generate a file that will make IMFaic.Probability a friend to Probability
-    #
-    PROBABILITYFRIENDSCS="${OBJDIR}/ProbabilityFriends.cs"
-    echo "
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-
-    [assembly:InternalsVisibleTo(\"IMFaic.Probability\")]
-    " > "${PROBABILITYFRIENDSCS}"
 
     #Generate a file that will run the episode in IMFaic.Probability
     #
@@ -71,28 +83,6 @@ do
         }
     }
     " > "${PROGRAMCS}"
-
-
-
-    echo "Compiling Probability.dll"
-
-    csc \
-    -nologo \
-    -out:"${BINDIR}/Probability.dll" \
-    -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
-    -target:"library" \
-    "${PROBABILITYFRIENDSCS}"
-
-
-
-    echo "Compiling IMFaic.Probability.dll"
-
-    csc \
-    -nologo \
-    -out:"${BINDIR}/IMFaic.Probability.dll" \
-    -recurse:"${SCRIPTROOT}/../src/*.cs" \
-    -reference:"${BINDIR}/Probability.dll" \
-    -target:"library"
 
 
 
