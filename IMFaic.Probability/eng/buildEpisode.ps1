@@ -55,9 +55,7 @@ foreach ($episodeNumber in $Episode) {
     -out:"$(Join-Path $binDir "Probability.dll")" `
     -recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
     -recurse:"$(Join-Path $PSScriptRoot "..\prb\*.cs")" `
-    -target:"library" `
-    $probabilityExtensionscs `
-    $probabilityFriendscs
+    -target:"library"
 
 
 
