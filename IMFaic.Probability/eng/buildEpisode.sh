@@ -28,7 +28,7 @@ csc -version &>/dev/null
 if [ $? -ne 0 ]
 then
     echo "Requires C# compiler (csc)."
-    echo "Install Mono version 5.0.0 or higher."
+    echo "Install Mono version 5.18.1.0 or higher."
     exit 1
 fi    
 
@@ -49,7 +49,8 @@ do
 
     echo "Compiling Probability.dll"
 
-    csc \
+    csc-dim \
+    -langversion:"7.2" \
     -nologo \
     -out:"${BINDIR}/Probability.dll" \
     -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
@@ -60,7 +61,8 @@ do
 
     echo "Compiling IMFaic.Probability.dll"
 
-    csc \
+    csc-dim \
+    -langversion:"7.2" \
     -nologo \
     -out:"${BINDIR}/IMFaic.Probability.dll" \
     -recurse:"${SCRIPTROOT}/../src/*.cs" \
@@ -88,7 +90,8 @@ do
 
     echo "Compiling IMFaic.Probability.exe"
 
-    csc \
+    csc-dim \
+    -langversion:"7.2" \
     -nologo \
     -out:"${BINDIR}/Program.exe" \
     -reference:"${BINDIR}/IMFaic.Probability.dll" \
