@@ -61,6 +61,7 @@ namespace Probability
         {
             int lcm = prior.Support()
                 .Select(a => likelihood(a).TotalWeight())
+                .Where(x => x != 0)
                 .LCM();
             var w = from a in prior.Support()
                     let pb = likelihood(a)
