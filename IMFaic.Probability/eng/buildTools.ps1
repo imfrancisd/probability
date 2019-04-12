@@ -21,18 +21,19 @@ if (-not (Test-Path $OutputDirectory)) {
 
 
 
-Write-Verbose "Download nuget.exe (see https://www.nuget.org/downloads)."
+Write-Verbose "Get nuget.exe (see https://www.nuget.org/downloads)."
 
 $tools.nuget = Join-Path $OutputDirectory "nuget.exe"
+$nugetSha256 = "CB139D855D06D07E7DA892E8558FE16DCAA65CB381175C506F5ED0A759EAF8F6"
 
-if (-not (Test-Path $tools.nuget) -or (Get-FileHash $tools.nuget -Algorithm SHA256).Hash -ne '1051f2053643a9fb5d8bf9ba7cf638164a3118541e90a671442cf3499c9606ef') {
+if (-not (Test-Path $tools.nuget) -or (Get-FileHash $tools.nuget -Algorithm SHA256).Hash -ne $nugetSha256) {
     Invoke-WebRequest `
     -OutFile $tools.nuget `
-    -Uri "https://dist.nuget.org/win-x86-commandline/v4.9.3/nuget.exe"
+    -Uri "https://dist.nuget.org/win-x86-commandline/v4.9.4/nuget.exe"
 }
 
-if (-not (Test-Path $tools.nuget) -or (Get-FileHash $tools.nuget -Algorithm SHA256).Hash -ne '1051f2053643a9fb5d8bf9ba7cf638164a3118541e90a671442cf3499c9606ef') {
-    throw "Could not download nuget.exe"
+if (-not (Test-Path $tools.nuget) -or (Get-FileHash $tools.nuget -Algorithm SHA256).Hash -ne $nugetSha256) {
+    throw "Could not get nuget.exe"
 }
 
 
