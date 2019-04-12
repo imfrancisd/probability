@@ -38,29 +38,32 @@ if (-not (Test-Path $tools.nuget) -or (Get-FileHash $tools.nuget -Algorithm SHA2
 
 
 
-Write-Verbose "Download compilers (see https://www.nuget.org/packages/Microsoft.Net.Compilers)"
+Write-Verbose "Get compilers (see https://www.nuget.org/packages/microsoft.net.compilers.toolset)."
 
-$tools.csc = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\csc.exe"
-$tools.csi = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\csi.exe"
-$tools.vbc = Join-Path $OutputDirectory "microsoft.net.compilers.2.10.0\tools\vbc.exe"
+$pkgName = "microsoft.net.compilers.toolset"
+$pkgVersion ="3.1.0-beta1-final"
+
+$tools.csc = Join-Path $OutputDirectory "$pkgName.$pkgVersion\tasks\net472\csc.exe"
+$tools.csi = Join-Path $OutputDirectory "$pkgName.$pkgVersion\tasks\net472\csi.exe"
+$tools.vbc = Join-Path $OutputDirectory "$pkgName.$pkgVersion\tasks\net472\vbc.exe"
 
 if (-not ((Test-Path $tools.csc) -and (Test-Path $tools.csi) -and (Test-Path $tools.vbc))) {
 
-    $(Join-Path $outputdirectory "microsoft.net.compilers.2.10.0") |
+    $(Join-Path $OutputDirectory "$pkgName.$pkgVersion") |
         Where-Object {Test-Path $_} |
         ForEach-Object {rmdir $_ -Recurse -Force}
 
     & $tools.nuget install `
-    "microsoft.net.compilers" `
+    $pkgName `
     -OutputDirectory $OutputDirectory `
     -Source "https://api.nuget.org/v3/index.json" `
     -Verbosity "$(if ($VerbosePreference -eq "SilentlyContinue") {"quiet"} else {"normal"})" `
-    -Version "2.10.0" |
+    -Version $pkgVersion |
     ForEach-Object {Write-Verbose $_}
 }
 
 if (-not ((Test-Path $tools.csc) -and (Test-Path $tools.csi) -and (Test-Path $tools.vbc))) {
-    throw "Could not get compilers from https://www.nuget.org/packages/Microsoft.Net.Compilers/2.10.0"
+    throw "Could not get compilers (nuget package $pkgName)"
 }
 
 
