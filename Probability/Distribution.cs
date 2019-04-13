@@ -61,6 +61,7 @@ namespace Probability
         {
             int lcm = prior.Support()
                 .Select(a => likelihood(a).TotalWeight())
+                .Where(x => x != 0)
                 .LCM();
             var w = from a in prior.Support()
                     let pb = likelihood(a)
@@ -80,6 +81,21 @@ namespace Probability
                 this IDiscreteDistribution<A> prior,
                 Func<A, IDiscreteDistribution<B>> likelihood) =>
             SelectMany(prior, likelihood, (a, b) => (a, b));
+
+
+        public static Func<B, IDiscreteDistribution<C>> Posterior<A, B, C>(
+                this IDiscreteDistribution<A> prior,
+                Func<A, IDiscreteDistribution<B>> likelihood,
+                Func<A, B, C> projection) =>
+          b => from a in prior
+               from bb in likelihood(a)
+               where object.Equals(b, bb)
+               select projection(a, b);
+
+        public static Func<B, IDiscreteDistribution<A>> Posterior<A, B>(
+                this IDiscreteDistribution<A> prior,
+                Func<A, IDiscreteDistribution<B>> likelihood) =>
+            Posterior(prior, likelihood, (a, b) => a);
 
         public static IDiscreteDistribution<T> ToUniform<T>(
             this IEnumerable<T> items)
