@@ -79,7 +79,7 @@ do
     {
         public static void Main(string[] args)
         {
-            IMFaic.Probability.Episode${EPISODENUMBER}.RunProbability();
+            IMFaic.Probability.Episode${EPISODENUMBER}.Run(args);
         }
     }
     " > "${PROGRAMCS}"

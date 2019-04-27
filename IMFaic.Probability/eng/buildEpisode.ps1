@@ -78,7 +78,7 @@ foreach ($episodeNumber in $Episode) {
         "{",
         "    public static void Main(string[] args)",
         "    {",
-        "        IMFaic.Probability.Episode$episodeNumber.RunProbability();",
+        "        IMFaic.Probability.Episode$episodeNumber.Run(args);",
         "    }",
         "}"
     ) | Out-File -FilePath $programcs -Encoding utf8 -Force
