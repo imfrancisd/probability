@@ -95,4 +95,8 @@ foreach ($episodeNumber in $Episode) {
     $programcs
 
     Move-Item $(Join-Path $binDir "Program.exe") $(Join-Path $binDir "IMFaic.Probability.exe")
+
+    if ($episodeNumber -eq "25") {
+        Copy-Item (Join-Path $PSScriptRoot "..\src\Episodes\shakespeare.txt") -Destination $binDir
+    }
 }
