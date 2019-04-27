@@ -6,6 +6,11 @@ namespace IMFaic.Probability
 {
     public static class Episode16
     {
+        public static void Run(string[] args)
+        {
+            RunProbability();
+        }
+
         public static void RunProbability()
         {
             Console.WriteLine("Probability");
