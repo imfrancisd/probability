@@ -1,10 +1,11 @@
 ﻿using System;
+using System.IO;
 using Probability;
-using ProbabilityEp16 = Probability.Episode16;
+using ProbabilityEp25 = Probability.Episode25;
 
 namespace IMFaic.Probability
 {
-    public static class Episode16
+    public static class Episode25
     {
         public static void Run(string[] args)
         {
@@ -14,7 +15,10 @@ namespace IMFaic.Probability
         public static void RunProbability()
         {
             Console.WriteLine("Probability");
-            ProbabilityEp16.DoIt();
+            if (File.Exists("shakespeare.txt"))
+            {
+                ProbabilityEp25.DoIt();
+            }
             Console.WriteLine("Press Enter to finish");
             Console.ReadLine();
         }
