@@ -78,7 +78,7 @@ foreach ($episodeNumber in $Episode) {
         "{",
         "    public static void Main(string[] args)",
         "    {",
-        "        IMFaic.Probability.Episode$episodeNumber.RunProbability();",
+        "        IMFaic.Probability.Episode$episodeNumber.Run(args);",
         "    }",
         "}"
     ) | Out-File -FilePath $programcs -Encoding utf8 -Force
@@ -95,4 +95,8 @@ foreach ($episodeNumber in $Episode) {
     $programcs
 
     Move-Item $(Join-Path $binDir "Program.exe") $(Join-Path $binDir "IMFaic.Probability.exe")
+
+    if ($episodeNumber -eq "25") {
+        Copy-Item (Join-Path $PSScriptRoot "..\src\Episodes\shakespeare.txt") -Destination $binDir
+    }
 }

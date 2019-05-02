@@ -79,7 +79,7 @@ do
     {
         public static void Main(string[] args)
         {
-            IMFaic.Probability.Episode${EPISODENUMBER}.RunProbability();
+            IMFaic.Probability.Episode${EPISODENUMBER}.Run(args);
         }
     }
     " > "${PROGRAMCS}"
@@ -96,6 +96,11 @@ do
     "${PROGRAMCS}"
 
     mv "${BINDIR}/Program.exe" "${BINDIR}/IMFaic.Probability.exe"
+
+    if [ "${EPISODENUMBER}" == "25" ]
+    then
+        cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${BINDIR}/"
+    fi
     
 done
 
