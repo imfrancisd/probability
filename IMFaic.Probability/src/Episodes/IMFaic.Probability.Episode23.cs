@@ -1,10 +1,10 @@
 ﻿using System;
 using Probability;
-using ProbabilityEp16 = Probability.Episode16;
+using ProbabilityEp23 = Probability.Episode23;
 
 namespace IMFaic.Probability
 {
-    public static class Episode16
+    public static class Episode23
     {
         public static void Run(string[] args)
         {
@@ -14,7 +14,7 @@ namespace IMFaic.Probability
         public static void RunProbability()
         {
             Console.WriteLine("Probability");
-            ProbabilityEp16.DoIt();
+            ProbabilityEp23.DoIt();
             Console.WriteLine("Press Enter to finish");
             Console.ReadLine();
         }
