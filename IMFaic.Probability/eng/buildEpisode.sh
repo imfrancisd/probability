@@ -23,11 +23,11 @@ fi
 
 
 
-csc -version &>/dev/null
+csc-dim -version &>/dev/null
 
 if [ $? -ne 0 ]
 then
-    echo "Requires C# compiler (csc)."
+    echo "Requires C# compiler (csc-dim)."
     echo "Install Mono version 5.18.1.0 or higher."
     exit 1
 fi    
