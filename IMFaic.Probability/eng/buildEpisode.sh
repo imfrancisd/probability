@@ -97,7 +97,7 @@ do
 
     mv "${BINDIR}/Program.exe" "${BINDIR}/IMFaic.Probability.exe"
 
-    if [ "${EPISODENUMBER}" -eq "25" ]
+    if [ "${EPISODENUMBER}" == "25" ]
     then
         cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${BINDIR}/"
     fi
