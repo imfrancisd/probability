@@ -5,6 +5,11 @@ namespace IMFaic.Probability
 {
     public static class EpisodeExperimentExtensionsAlternatives
     {
+        public static void Run(string[] args)
+        {
+            RunIMFaicProbability();
+        }
+
         public static void RunProbability()
         {
             RunIMFaicProbability();
