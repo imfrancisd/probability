@@ -9,7 +9,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$PSDefaultParameterValues = @{'Disabled' = $true}
+$PSDefaultParameterValues = @{"Disabled" = $true}
 
 
 
@@ -31,6 +31,38 @@ $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot
 
 
 
+$libDir = Join-Path $PSScriptRoot "..\obj\lib"
+
+if (Test-Path $libDir) {
+    rmdir -Recurse -Force $libDir
+}
+
+mkdir $libDir | out-null
+
+
+
+Write-Verbose "Compiling Probability.dll"
+
+& $tools.csc `
+-nologo `
+-out:"$(Join-Path $libDir "Probability.dll")" `
+-recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
+-recurse:"$(Join-Path $PSScriptRoot "..\prb\*.cs")" `
+-target:"library"
+
+
+
+Write-Verbose "Compiling IMFaic.Probability.dll"
+
+& $tools.csc `
+-nologo `
+-out:"$(Join-Path $libDir "IMFaic.Probability.dll")" `
+-recurse:"$(Join-Path $PSScriptRoot "..\src\*.cs")" `
+-reference:"$(Join-Path $libDir "Probability.dll")" `
+-target:"library"
+
+
+
 foreach ($episodeNumber in $Episode) {
 
     Write-Verbose "Build Episode$episodeNumber."
@@ -46,31 +78,7 @@ foreach ($episodeNumber in $Episode) {
         mkdir $directory | out-null
     }
 
-
-
-    Write-Verbose "Compiling Probability.dll"
-
-    & $tools.csc `
-    -nologo `
-    -out:"$(Join-Path $binDir "Probability.dll")" `
-    -recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
-    -recurse:"$(Join-Path $PSScriptRoot "..\prb\*.cs")" `
-    -target:"library"
-
-
-
-    Write-Verbose "Compiling IMFaic.Probability.dll"
-
-    & $tools.csc `
-    -nologo `
-    -out:"$(Join-Path $binDir "IMFaic.Probability.dll")" `
-    -recurse:"$(Join-Path $PSScriptRoot "..\src\*.cs")" `
-    -reference:"$(Join-Path $binDir "Probability.dll")" `
-    -target:"library"
-
-
-
-    Write-Verbose "Generating Source."
+    Copy-Item $(Join-Path $libDir "*.dll") -Destination $binDir
 
     $programcs = Join-Path $objDir "Program.cs"
     @(
