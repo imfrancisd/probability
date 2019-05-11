@@ -3,13 +3,13 @@
 This contains all the build scripts and tools necessary to build the project.
 
 
-Build all episodes quietly
+**Build all episodes quietly**
 ```
 #From powershell.exe
 .\buildEpisode.ps1
 ```
 
-Build all episodes verbosely
+**Build all episodes verbosely**
 ```
 #From powershell.exe
 .\buildEpisode.ps1 -Verbose
@@ -21,13 +21,13 @@ Build all episodes verbosely
 ```
 
 
-Build some episodes quietly
+**Build some episodes quietly**
 ```
 #From powershell.exe
 .\buildEpisode.ps1 -Episode 1, 2, 3
 ```
 
-Build some episodes verbosely
+**Build some episodes verbosely**
 ```
 #From powershell.exe
 .\buildEpisode.ps1 -Episode 1, 2, 3 -Verbose
@@ -38,3 +38,8 @@ Build some episodes verbosely
 ./buildEpisode.sh 1 2 3
 ```
 
+# Build Status
+
+| mission-impossible (windows) | ghost-protocol (windows) |
+| ---------------------------- | ------------------------ |
+| [![Build status](https://ci.appveyor.com/api/projects/status/ykhusk01vlg1ea0l/branch/imfrancisd/mission-impossible?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible) | [![Build status](https://ci.appveyor.com/api/projects/status/h8voysbh93asgajq/branch/imfrancisd/mission-impossible-ghost-protocol?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol) |
