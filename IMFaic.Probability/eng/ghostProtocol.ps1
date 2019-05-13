@@ -3,6 +3,11 @@
 [cmdletbinding()]
 param()
 
+$ErrorActionPreference = "Stop"
+$PSDefaultParameterValues = @{"Disabled" = $true}
+
+
+
 git config user.name "Francis de la Cerna"
 git config user.email "imfrancisd@users.noreply.github.com"
 
@@ -20,6 +25,8 @@ $diffBranches = @(
         Where-Object {$originBranches -cnotcontains $_} |
         Sort-Object {$_.Replace("episode", "") -as [double]}, {$_}
 )
+
+
 
 foreach ($branch in $diffBranches) {
     if ($localBranches -ccontains $branch) {
@@ -74,3 +81,5 @@ foreach ($branch in $diffBranches) {
         }
     }
 }
+
+#TODO: Delete git config and secure environment variables?
