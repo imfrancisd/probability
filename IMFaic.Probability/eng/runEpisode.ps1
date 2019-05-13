@@ -19,7 +19,8 @@ if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
     $Episode = @(
         dir (Join-Path $PSScriptRoot "..\src\Episodes") -Filter IMFaic.Probability.Episode*.cs |
             ForEach-Object {[System.IO.Path]::GetFileNameWithoutExtension($_.fullname)} |
-            ForEach-Object {$_ -replace "IMFaic.Probability.Episode", ""}
+            ForEach-Object {$_ -replace "IMFaic.Probability.Episode", ""} |
+            Sort-Object {$_ -as [double]}, {$_}
     )
 }
 
