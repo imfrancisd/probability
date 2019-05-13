@@ -3,8 +3,6 @@
 [cmdletbinding()]
 param()
 
-$ErrorActionPreference = "Stop"
-
 if (@(git remote) -notcontains "faic") {
     git remote add "faic" "https://github.com/ericlippert/probability"
 }
