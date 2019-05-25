@@ -69,21 +69,41 @@ $faicBranches = @(
 
 
 foreach ($branch in $faicBranches) {
+    <####################################
+    branch           episode   episode id
+    ------           -------   ----------
+    master                               
+    bonus01                              
+    episode09        09                 9
+    episode10        10                10
+    episode0         0                  0
+    episode0.0       0.0                0
+    episode3         3                  3
+    episode03        03                 3
+    episode030       030               30
+    episode3.14      3.14            3.14
+    episode03.14     03.14           3.14
+    episode03.1400   03.1400         3.14
+    episodealpha0    alpha0        alpha0
+    episodealpha0.0  alpha0.0    alpha0.0
+    episodeepisode00 episode00  episode00
+    ####################################>
+
     if ($branch -notmatch "^episode") {
         Write-Verbose "Skipping branch `"faic/$($branch)`" since it is not an episode."
         continue
     }
 
-    $episodeId = ($branch -replace "^episode", "")
-    if ($null -ne ($episodeId -as [double])) {
-        $episodeId = $episodeId -as [double]
+    $episode = ($branch -replace "^episode", "")
+    $episodeId = $episode -as [double]
+    if ($null -eq $episodeId) {
+        $episodeId = $episode
     }
 
     $srcFile = Join-Path $PSScriptRoot "..\src\Episodes\IMFaic.Probability.Episode$($episodeId).cs"
 
     if (-not (Test-Path $srcFile)) {
-        #Assume that faic/$branch episode is not merged
-        #if IMFaic.Probability.Episode$($episodeId).cs does not exist.
+        #Assume that faic/$branch is not merged if IMFaic.Probability.Episode$($episodeId).cs does not exist.
 
         Write-Verbose "Merging `"faic/$($branch)`"."
         git merge "faic/$($branch)" --quiet
@@ -92,7 +112,7 @@ foreach ($branch in $faicBranches) {
         @(
             "using System;"
             "using Probability;"
-            "using ProbabilityEp$($episodeId) = Probability.Episode$($episodeId);"
+            "using ProbabilityEp$($episodeId) = Probability.Episode$($episode);"
             ""
             "namespace IMFaic.Probability"
             "{"
@@ -130,6 +150,6 @@ foreach ($branch in $faicBranches) {
 if ($PushChanges) {
     #Assume git is already configured to push to origin.
     $currentBranch = git rev-parse --abbrev-ref "HEAD"
-    Write-Verbose "Pushing changes from branch `"$($currentBranch)`" to `"$($OriginUrl)`""
-    git push $OriginUrl $currentBranch
+    Write-Verbose "Pushing changes from branch `"$($currentBranch)`""
+    git push origin $currentBranch --quiet
 }

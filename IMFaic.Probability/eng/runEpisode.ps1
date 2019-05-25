@@ -31,9 +31,7 @@ foreach ($episodeId in $Episode) {
     $exe = @(dir -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
 
     foreach ($item in $exe) {
-        "=" * $Host.UI.RawUI.BufferSize.Width
-        $item.FullName
-        "=" * $Host.UI.RawUI.BufferSize.Width
+        Write-Verbose $("& " + $item.FullName)
         pushd (Split-Path $item.FullName -Parent)
         try {"" | & $item.FullName}
         finally {popd}

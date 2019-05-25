@@ -3,6 +3,11 @@
 This contains all the build scripts and tools necessary to build the project.
 
 
+
+# Build
+
+Build the episodes with buildEpisode.ps1 for powershell.exe and buildEpisode.sh for bash.
+
 **Build all episodes quietly**
 ```
 #From powershell.exe
@@ -40,7 +45,31 @@ This contains all the build scripts and tools necessary to build the project.
 
 
 
-# Build Status
+# Run
+
+Run the episodes with runEpisode.ps1 for powershell.exe. The script runEpisode.ps1 is used for the automated build, but you can use it as well.
+
+You can see the automated build output in the following link:
+
+**Mission Impossible Build**
+
+https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible
+
+
+
+# Create
+
+Create episodes with ghostProtocol.ps1 for powershell.exe by merging episode branches from [ericlippert/probability](https://github.com/ericlippert/probability) and creating their corresponding source files. The script ghostProtocol.ps1 is used for the automated build, but you can use it as well.
+
+You can see the automated build output in the following link:
+
+**Ghost Protocol Build**
+
+https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol
+
+
+
+# Automated Build
 
 |                 | **mission-impossible**  | **ghost-protocol**               |
 | --------------- | ----------------------- | -------------------------------- |
