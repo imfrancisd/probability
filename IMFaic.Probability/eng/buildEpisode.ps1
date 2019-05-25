@@ -17,8 +17,8 @@ $PSDefaultParameterValues = @{"Disabled" = $true}
 #
 if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
     $Episode = @(
-        dir (Join-Path $PSScriptRoot "..\src\Episodes") -Filter IMFaic.Probability.Episode*.cs |
-            ForEach-Object {[System.IO.Path]::GetFileNameWithoutExtension($_.fullname)} |
+        dir (Join-Path $PSScriptRoot "..\src\Episodes") -Filter "IMFaic.Probability.Episode*.cs" |
+            ForEach-Object {[System.IO.Path]::GetFileNameWithoutExtension($_.FullName)} |
             ForEach-Object {$_ -replace "IMFaic.Probability.Episode", ""} |
             Sort-Object {$_ -as [double]}, {$_}
     )
@@ -64,12 +64,12 @@ Write-Verbose "Compiling IMFaic.Probability.dll"
 
 
 
-foreach ($episodeNumber in $Episode) {
+foreach ($episodeId in $Episode) {
 
-    Write-Verbose "Build Episode$episodeNumber."
+    Write-Verbose "Build Episode$($episodeId)."
 
-    $binDir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\$episodeNumber.1.0"
-    $objDir = Join-Path $PSScriptRoot "..\obj\IMFaic.Probability\$episodeNumber.1.0"
+    $binDir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\$($episodeId).1.0"
+    $objDir = Join-Path $PSScriptRoot "..\obj\IMFaic.Probability\$($episodeId).1.0"
 
     foreach ($directory in @($binDir, $objDir)) {
         if (Test-Path $directory) {
@@ -87,7 +87,7 @@ foreach ($episodeNumber in $Episode) {
         "{",
         "    public static void Main(string[] args)",
         "    {",
-        "        IMFaic.Probability.Episode$episodeNumber.Run(args);",
+        "        IMFaic.Probability.Episode$($episodeId).Run(args);",
         "    }",
         "}"
     ) | Out-File -FilePath $programcs -Encoding utf8 -Force
@@ -105,7 +105,7 @@ foreach ($episodeNumber in $Episode) {
 
     Move-Item $(Join-Path $binDir "Program.exe") $(Join-Path $binDir "IMFaic.Probability.exe")
 
-    if ($episodeNumber -eq "25") {
+    if ($episodeId -eq "25") {
         Copy-Item (Join-Path $PSScriptRoot "..\src\Episodes\shakespeare.txt") -Destination $binDir
     }
 }
