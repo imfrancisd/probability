@@ -109,10 +109,24 @@ foreach ($branch in $faicBranches) {
         git merge "faic/$($branch)" --quiet
 
         Write-Verbose "Creating `"$($srcFile)`"."
+
+        $hasEpisodeExample = & {
+            #FORESHADOW:
+            #Check if all of the following exists:
+            #    public static void DoIt() in
+            #    public|protected static class Episode$($episodeId) in
+            #    Probability\Episode$($episode).cs
+            Test-Path (Join-Path $PSScriptRoot "..\..\Probability\Episode$($episode).cs")
+        }
+
         @(
             "using System;"
             "using Probability;"
-            "using ProbabilityEp$($episodeId) = Probability.Episode$($episode);"
+            
+            if ($hasEpisodeExample) {
+                "using ProbabilityEp$($episodeId) = Probability.Episode$($episode);"
+            }
+
             ""
             "namespace IMFaic.Probability"
             "{"
@@ -126,7 +140,11 @@ foreach ($branch in $faicBranches) {
             "        public static void RunProbability()"
             "        {"
             "            Console.WriteLine(`"Probability`");"
-            "            ProbabilityEp$($episodeId).DoIt();"
+
+            if ($hasEpisodeExample) {
+                "            ProbabilityEp$($episodeId).DoIt();"
+            }
+
             "            Console.WriteLine(`"Press Enter to finish`");"
             "            Console.ReadLine();"
             "        }"
