@@ -23,14 +23,53 @@ fi
 
 
 
-csc -version &>/dev/null
+echo "Get build tools."
+
+PKGDIR="${SCRIPTROOT}/../packages"
+mkdir -p "${PKGDIR}"
+
+
+
+echo "Check if  mono is installed."
+
+mono --version &>/dev/null
 
 if [ $? -ne 0 ]
 then
-    echo "Requires C# compiler (csc)."
-    echo "Install Mono version 5.0.0 or higher."
+    echo "Requires Mono version 5.0.0 or higher."
     exit 1
-fi    
+fi
+
+
+
+echo "Get compilers (see https://www.nuget.org/packages/microsoft.net.compilers.toolset)."
+
+PKGNAME="microsoft.net.compilers.toolset"
+PKGVERSION="3.1.0"
+PKGSHA512="80031aac4e6174a978135cc89030f59a914618e75053c48893087809311106747e4eb6921c62ae093e0c12603851a72a4e59277c7f3c956c314c7cfc7b66c762"
+
+CSCEXE="${PKGDIR}/${PKGNAME}/${PKGVERSION}/tasks/net472/csc.exe"
+
+if [ ! -f "${CSCEXE}" ]
+then
+    rm -rf "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
+    mkdir -p "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
+    wget -O "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" "https://www.nuget.org/api/v2/package/Microsoft.Net.Compilers.Toolset/3.1.0"
+
+    if [ "${PKGSHA512}" != "$(sha512sum "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" | cut -d " " -f 1)" ]
+    then
+        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg does not have expected SHA512 sum)."
+        exit 1
+    fi
+
+    unzip "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" -d "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
+
+    if [ ! -f "${CSCEXE}" ]
+    then
+        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg does not have expected folder structure)."
+        exit 1
+    fi
+fi
 
 
 
@@ -49,7 +88,7 @@ do
 
     echo "Compiling Probability.dll"
 
-    csc \
+    mono "${CSCEXE}" \
     -nologo \
     -out:"${BINDIR}/Probability.dll" \
     -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
@@ -60,7 +99,7 @@ do
 
     echo "Compiling IMFaic.Probability.dll"
 
-    csc \
+    mono "${CSCEXE}" \
     -nologo \
     -out:"${BINDIR}/IMFaic.Probability.dll" \
     -recurse:"${SCRIPTROOT}/../src/*.cs" \
@@ -88,7 +127,7 @@ do
 
     echo "Compiling IMFaic.Probability.exe"
 
-    csc \
+    mono "${CSCEXE}" \
     -nologo \
     -out:"${BINDIR}/Program.exe" \
     -reference:"${BINDIR}/IMFaic.Probability.dll" \
