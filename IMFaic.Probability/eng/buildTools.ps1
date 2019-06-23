@@ -30,7 +30,7 @@ Write-Verbose "Get compilers (see https://www.nuget.org/packages/microsoft.net.c
 
 $pkgName = "microsoft.net.compilers.toolset"
 $pkgVersion = "3.1.0"
-$pkgUri = "https://www.nuget.org/api/v2/packages/$($pkgName)/$($pkgVersion)"
+$pkgUri = "https://www.nuget.org/api/v2/package/$($pkgName)/$($pkgVersion)"
 $pkgDir = Join-Path $OutputDirectory "$($pkgName)/$($pkgVersion)"
 $pkgZip = Join-Path $OutputDirectory "$($pkgName).$($pkgVersion).nupkg.zip"
 $pkgZipSha512 = "80031aac4e6174a978135cc89030f59a914618e75053c48893087809311106747e4eb6921c62ae093e0c12603851a72a4e59277c7f3c956c314c7cfc7b66c762"
