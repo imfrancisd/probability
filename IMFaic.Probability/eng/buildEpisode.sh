@@ -76,7 +76,7 @@ fi
 LIBDIR="${SCRIPTROOT}/../obj/lib"
 
 rm -rf "${LIBDIR}"
-mkdir -p "${LIBDIR}" | out-null
+mkdir -p "${LIBDIR}"
 
 
 
