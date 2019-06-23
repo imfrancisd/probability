@@ -36,10 +36,10 @@ foreach ($episodeId in $Episode) {
     $dir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\$($episodeId).*.*"
     $exe = @(dir -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
     foreach ($item in $exe) {
-        $cmd = [scriptblock]::Create("$($runner) $($item.FullName)")
+        $cmd = [scriptblock]::Create("'' | $($runner) $($item.FullName)")
         Write-Verbose $cmd.ToString()
         pushd (Split-Path $item.FullName -Parent)
-        try {"" | & $cmd}
+        try {& $cmd}
         finally {popd}
     }
 }
