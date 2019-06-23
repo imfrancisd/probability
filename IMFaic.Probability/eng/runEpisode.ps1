@@ -1,11 +1,16 @@
 #requires -version 5
 
-[cmdletbinding()]
+[Cmdletbinding()]
 param(
     #Episode to build.
-    [parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $false)]
+    [Parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $false)]
     [string[]]
-    $Episode
+    $Episode,
+
+    [Parameter(Mandatory = $false, Position = 1, ValueFromPipeline = $false)]
+    [ValidateSet("Core", "Mono", "Net")]
+    [string]
+    $Framework = "Net"
 )
 
 $ErrorActionPreference = "Stop"
@@ -26,14 +31,15 @@ if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
 
 
 
+$runner = if ($Framework -eq "Mono") {"mono"} elseif ($Framework -eq "Core") {"dotnet"} else {"&"}
 foreach ($episodeId in $Episode) {
     $dir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\$($episodeId).*.*"
     $exe = @(dir -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
-
     foreach ($item in $exe) {
-        Write-Verbose $("& " + $item.FullName)
+        $cmd = [scriptblock]::Create("$($runner) $($item.FullName)")
+        Write-Verbose $cmd.ToString()
         pushd (Split-Path $item.FullName -Parent)
-        try {"" | & $item.FullName}
+        try {"" | & $cmd}
         finally {popd}
     }
 }
