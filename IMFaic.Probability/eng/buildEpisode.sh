@@ -73,6 +73,35 @@ fi
 
 
 
+LIBDIR="${SCRIPTROOT}/../obj/lib"
+
+rm -rf "${LIBDIR}"
+mkdir -p "${LIBDIR}" | out-null
+
+
+
+echo "Compiling Probability.dll"
+
+mono "${CSCEXE}" \
+-nologo \
+-out:"${LIBDIR}/Probability.dll" \
+-recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
+-recurse:"${SCRIPTROOT}/../prb/*.cs" \
+-target:"library"
+
+
+
+echo "Compiling IMFaic.Probability.dll"
+
+mono "${CSCEXE}" \
+-nologo \
+-out:"${LIBDIR}/IMFaic.Probability.dll" \
+-recurse:"${SCRIPTROOT}/../src/*.cs" \
+-reference:"${LIBDIR}/Probability.dll" \
+-target:"library"
+
+
+
 for EPISODENUMBER in "${EPISODE[@]}"
 do
 
@@ -84,34 +113,8 @@ do
     rm -rf "${BINDIR}" "${OBJDIR}"
     mkdir -p "${BINDIR}" "${OBJDIR}"
 
+    cp "${LIBDIR}/*.dll" "${BINDIR}/"
 
-
-    echo "Compiling Probability.dll"
-
-    mono "${CSCEXE}" \
-    -nologo \
-    -out:"${BINDIR}/Probability.dll" \
-    -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
-    -recurse:"${SCRIPTROOT}/../prb/*.cs" \
-    -target:"library"
-
-
-
-    echo "Compiling IMFaic.Probability.dll"
-
-    mono "${CSCEXE}" \
-    -nologo \
-    -out:"${BINDIR}/IMFaic.Probability.dll" \
-    -recurse:"${SCRIPTROOT}/../src/*.cs" \
-    -reference:"${BINDIR}/Probability.dll" \
-    -target:"library"
-
-
-
-    echo "Generating Source"
-
-    #Generate a file that will run the episode in IMFaic.Probability
-    #
     PROGRAMCS="${OBJDIR}/Program.cs"
     echo "
     public class Program
@@ -140,6 +143,5 @@ do
     then
         cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${BINDIR}/"
     fi
-    
-done
 
+done
