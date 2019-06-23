@@ -54,19 +54,19 @@ if [ ! -f "${CSCEXE}" ]
 then
     rm -rf "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
     mkdir -p "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
-    wget -O "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" "https://www.nuget.org/api/v2/package/Microsoft.Net.Compilers.Toolset/3.1.0" 2>&1
+    wget -O "${PKGDIR}/${PKGNAME}.${PKGVERSION}.nupkg.zip" "https://www.nuget.org/api/v2/package/Microsoft.Net.Compilers.Toolset/3.1.0" 2>&1
 
-    if [ "${PKGSHA512}" != "$(sha512sum "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" | cut -d " " -f 1)" ]
+    if [ "${PKGSHA512}" != "$(sha512sum "${PKGDIR}/${PKGNAME}.${PKGVERSION}.nupkg.zip" | cut -d " " -f 1)" ]
     then
-        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg does not have expected SHA512 sum)."
+        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg.zip does not have expected SHA512 sum)."
         exit 1
     fi
 
-    unzip "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" -d "${PKGDIR}/${PKGNAME}/${PKGVERSION}" 2>&1
+    unzip "${PKGDIR}/${PKGNAME}.${PKGVERSION}.nupkg.zip" -d "${PKGDIR}/${PKGNAME}/${PKGVERSION}" 2>&1
 
     if [ ! -f "${CSCEXE}" ]
     then
-        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg does not have expected folder structure)."
+        echo "Could not get compilers (nuget package ${PKGNAME}.${PKGVERSION}.nupkg.zip does not have expected folder structure)."
         exit 1
     fi
 fi
