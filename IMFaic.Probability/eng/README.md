@@ -71,9 +71,24 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 
 # Automated Build
 
-|                 | **mission-impossible**  | **ghost-protocol**               |
-| --------------- | ----------------------- | -------------------------------- |
-| **Status**      | [![Build status](https://ci.appveyor.com/api/projects/status/ykhusk01vlg1ea0l/branch/imfrancisd/mission-impossible?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible) | [![Build status](https://ci.appveyor.com/api/projects/status/h8voysbh93asgajq/branch/imfrancisd/mission-impossible-ghost-protocol?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol) |
-| **Schedule**    | Monday-Friday 20:00 UTC | Monday-Friday 20:00 UTC          |
-| **Description** | Build and run episodes. | Create, build, and run episodes. |
-| **Links**       | [repo](https://github.com/imfrancisd/probability/tree/imfrancisd/mission-impossible), [build](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible), [zip](https://ci.appveyor.com/project/imfrancisd/probability/build/artifacts) | [repo](https://github.com/imfrancisd/probability/tree/imfrancisd/mission-impossible-ghost-protocol), [build](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol), [zip](https://ci.appveyor.com/project/imfrancisd/probability-62n01/build/artifacts) |
+
+**Windows**
+
+|                  | **mission-impossible**  | **ghost-protocol**               |
+| ---------------- | ----------------------- | -------------------------------- |
+| **Status**       | [![Build status](https://ci.appveyor.com/api/projects/status/ykhusk01vlg1ea0l/branch/imfrancisd/mission-impossible?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible) | [![Build status](https://ci.appveyor.com/api/projects/status/h8voysbh93asgajq/branch/imfrancisd/mission-impossible-ghost-protocol?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol) |
+| **Schedule**     | Monday-Friday 20:00 UTC | Monday-Friday 20:00 UTC          |
+| **Description**  | Build and run episodes. | Create, build, and run episodes. |
+| **Framework**    | .NET                    | .NET                             |
+| **Links**        | [build](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability/build/artifacts) | [build](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability-62n01/build/artifacts) |
+
+
+**Ubuntu**
+
+|                  | **mission-impossible**  |
+| ---------------- | ----------------------- |
+| **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-ubuntu1604-bash?branchName=imfrancisd/mission-impossible&jobName=mission-impossible-ubuntu1604-bash)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) |
+| **Schedule**     | Monday-Friday 20:00 UTC |
+| **Description**  | Build and run episodes. |
+| **Framework**    | Mono                    |
+| **Links**        | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) |
