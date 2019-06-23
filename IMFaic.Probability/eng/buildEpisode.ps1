@@ -45,7 +45,9 @@ mkdir $libDir | out-null
 Write-Verbose "Compiling Probability.dll"
 
 & $tools.csc `
+-deterministic `
 -nologo `
+-optimize `
 -out:"$(Join-Path $libDir "Probability.dll")" `
 -recurse:"$(Join-Path $PSScriptRoot "..\..\Probability\*.cs")" `
 -recurse:"$(Join-Path $PSScriptRoot "..\prb\*.cs")" `
@@ -56,7 +58,9 @@ Write-Verbose "Compiling Probability.dll"
 Write-Verbose "Compiling IMFaic.Probability.dll"
 
 & $tools.csc `
+-deterministic `
 -nologo `
+-optimize `
 -out:"$(Join-Path $libDir "IMFaic.Probability.dll")" `
 -recurse:"$(Join-Path $PSScriptRoot "..\src\*.cs")" `
 -reference:"$(Join-Path $libDir "Probability.dll")" `
@@ -97,7 +101,9 @@ foreach ($episodeId in $Episode) {
     Write-Verbose "Compiling IMFaic.Probability.exe"
 
     & $tools.csc `
+    -deterministic `
     -nologo `
+    -optimize `
     -out:"$(Join-Path $binDir "Program.exe")" `
     -reference:"$(Join-Path $binDir "IMFaic.Probability.dll")" `
     -target:"exe" `

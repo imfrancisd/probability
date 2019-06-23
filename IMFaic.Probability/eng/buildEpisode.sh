@@ -83,7 +83,9 @@ mkdir -p "${LIBDIR}"
 echo "Compiling Probability.dll"
 
 mono "${CSCEXE}" \
+-deterministic \
 -nologo \
+-optimize \
 -out:"${LIBDIR}/Probability.dll" \
 -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
 -recurse:"${SCRIPTROOT}/../prb/*.cs" \
@@ -94,7 +96,9 @@ mono "${CSCEXE}" \
 echo "Compiling IMFaic.Probability.dll"
 
 mono "${CSCEXE}" \
+-deterministic \
 -nologo \
+-optimize \
 -out:"${LIBDIR}/IMFaic.Probability.dll" \
 -recurse:"${SCRIPTROOT}/../src/*.cs" \
 -reference:"${LIBDIR}/Probability.dll" \
@@ -131,7 +135,9 @@ do
     echo "Compiling IMFaic.Probability.exe"
 
     mono "${CSCEXE}" \
+    -deterministic \
     -nologo \
+    -optimize \
     -out:"${BINDIR}/Program.exe" \
     -reference:"${BINDIR}/IMFaic.Probability.dll" \
     -target:"exe" \
