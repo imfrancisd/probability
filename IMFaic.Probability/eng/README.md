@@ -79,16 +79,18 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 | **Status**       | [![Build status](https://ci.appveyor.com/api/projects/status/ykhusk01vlg1ea0l/branch/imfrancisd/mission-impossible?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible) | [![Build status](https://ci.appveyor.com/api/projects/status/h8voysbh93asgajq/branch/imfrancisd/mission-impossible-ghost-protocol?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol) |
 | **Schedule**     | Monday-Friday 20:00 UTC | Monday-Friday 20:00 UTC          |
 | **Description**  | Build and run episodes. | Create, build, and run episodes. |
+| **Shell**        | powershell              | powershell                       |
 | **Framework**    | .NET                    | .NET                             |
 | **Links**        | [build](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability/build/artifacts) | [build](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability-62n01/build/artifacts) |
 
 
 **Ubuntu**
 
-|                  | **mission-impossible**  |
-| ---------------- | ----------------------- |
-| **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-ubuntu1604-bash?branchName=imfrancisd/mission-impossible&jobName=mission-impossible-ubuntu1604-bash)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) |
-| **Schedule**     | Monday-Friday 20:00 UTC |
-| **Description**  | Build and run episodes. |
-| **Framework**    | Mono                    |
-| **Links**        | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) |
+|                  | **mission-impossible**  | **mission-impossible**  |
+| ---------------- | ----------------------- | ----------------------- |
+| **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-ubuntu1604-bash?branchName=imfrancisd/mission-impossible)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-ubuntu1604-powershell-mono?branchName=imfrancisd/mission-impossible)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=2&branchName=imfrancisd/mission-impossible) |
+| **Schedule**     | Monday-Friday 20:00 UTC | Monday-Friday 20:00 UTC |
+| **Description**  | Build and run episodes. | Build and run episodes. |
+| **Shell**        | bash                    | powershell              |
+| **Framework**    | Mono                    | Mono                    |
+| **Links**        | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=2&branchName=imfrancisd/mission-impossible) |
