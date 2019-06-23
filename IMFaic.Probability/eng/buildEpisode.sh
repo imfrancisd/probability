@@ -113,7 +113,7 @@ do
     rm -rf "${BINDIR}" "${OBJDIR}"
     mkdir -p "${BINDIR}" "${OBJDIR}"
 
-    cp "${LIBDIR}/*.dll" "${BINDIR}/"
+    cp "${LIBDIR}/"*.dll "${BINDIR}/"
 
     PROGRAMCS="${OBJDIR}/Program.cs"
     echo "
