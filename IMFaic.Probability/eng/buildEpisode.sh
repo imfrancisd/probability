@@ -54,7 +54,7 @@ if [ ! -f "${CSCEXE}" ]
 then
     rm -rf "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
     mkdir -p "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
-    wget -O "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" "https://www.nuget.org/api/v2/package/Microsoft.Net.Compilers.Toolset/3.1.0"
+    wget --quiet -O "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" "https://www.nuget.org/api/v2/package/Microsoft.Net.Compilers.Toolset/3.1.0"
 
     if [ "${PKGSHA512}" != "$(sha512sum "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" | cut -d " " -f 1)" ]
     then
@@ -62,7 +62,7 @@ then
         exit 1
     fi
 
-    unzip "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" -d "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
+    unzip --quiet "${PKGDIR}/${PKGNAME}/${PKGVERSION}/${PKGNAME}.${PKGVERSION}.nupkg" -d "${PKGDIR}/${PKGNAME}/${PKGVERSION}"
 
     if [ ! -f "${CSCEXE}" ]
     then
