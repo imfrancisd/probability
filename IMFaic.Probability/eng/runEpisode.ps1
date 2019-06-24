@@ -39,9 +39,9 @@ foreach ($episodeId in $Episode) {
     foreach ($item in $exe) {
         $cmd = [scriptblock]::Create("`"`" | $($runner) $($item.FullName)")
 
-        Write-Verbose "$("=" * ($Host.UI.RawUI.BufferSize.Width - "VERBOSE: ".Length))"
+        Write-Verbose "$("=" * [System.Math]::Max(0, $Host.UI.RawUI.BufferSize.Width - "nnnnn VERBOSE: ".Length))"
         Write-Verbose $cmd.ToString()
-        Write-Verbose "$("=" * ($Host.UI.RawUI.BufferSize.Width - "VERBOSE: ".Length))"
+        Write-Verbose "$("=" * [System.Math]::Max(0, $Host.UI.RawUI.BufferSize.Width - "nnnnn VERBOSE: ".Length))"
 
         pushd (Split-Path $item.FullName -Parent)
         try {& $cmd}
