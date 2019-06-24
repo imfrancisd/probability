@@ -32,12 +32,17 @@ if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
 
 
 $runner = if ($Framework -eq "Mono") {"mono"} elseif ($Framework -eq "Core") {"dotnet"} else {"&"}
+
 foreach ($episodeId in $Episode) {
     $dir = Join-Path $PSScriptRoot "..\bin\IMFaic.Probability\$($episodeId).*.*"
     $exe = @(dir -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
     foreach ($item in $exe) {
         $cmd = [scriptblock]::Create("`"`" | $($runner) $($item.FullName)")
+
+        Write-Verbose "$("=" * ($Host.UI.RawUI.BufferSize.Width - "VERBOSE: ".Length))"
         Write-Verbose $cmd.ToString()
+        Write-Verbose "$("=" * ($Host.UI.RawUI.BufferSize.Width - "VERBOSE: ".Length))"
+
         pushd (Split-Path $item.FullName -Parent)
         try {& $cmd}
         finally {popd}
