@@ -35,8 +35,8 @@ $pkgDir = Join-Path $OutputDirectory "$($pkgName)/$($pkgVersion)"
 $pkgZip = Join-Path $OutputDirectory "$($pkgName).$($pkgVersion).nupkg.zip"
 $pkgZipSha512 = "80031aac4e6174a978135cc89030f59a914618e75053c48893087809311106747e4eb6921c62ae093e0c12603851a72a4e59277c7f3c956c314c7cfc7b66c762"
 
-$tools.csc = Join-Path $pkgDir "tasks/$(if ($Framework -eq "Core") {"netcoreapp2.1/bincore/"} else {"net472"})/csc.$(if ($Framework -eq "Core") {"dll"} else {"exe"})"
-$tools.vbc = Join-Path $pkgDir "tasks/$(if ($Framework -eq "Core") {"netcoreapp2.1/bincore/"} else {"net472"})/vbc.$(if ($Framework -eq "Core") {"dll"} else {"exe"})"
+$tools.csc = Join-Path $pkgDir "tasks/$(if ($Framework -eq "Core") {"netcoreapp2.1/bincore"} else {"net472"})/csc.$(if ($Framework -eq "Core") {"dll"} else {"exe"})"
+$tools.vbc = Join-Path $pkgDir "tasks/$(if ($Framework -eq "Core") {"netcoreapp2.1/bincore"} else {"net472"})/vbc.$(if ($Framework -eq "Core") {"dll"} else {"exe"})"
 
 if (-not ((Test-Path $tools.csc) -and (Test-Path $tools.vbc))) {
     Invoke-WebRequest $pkgUri -OutFile $pkgZip
