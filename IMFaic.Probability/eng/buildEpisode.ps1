@@ -1,9 +1,9 @@
 #requires -version 5
 
-[Cmdletbinding()]
+[CmdletBinding()]
 param(
     #Episode to build.
-    [parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $false)]
+    [Parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $false)]
     [string[]]
     $Episode,
 
@@ -25,7 +25,7 @@ if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
         Get-ChildItem (Join-Path $PSScriptRoot "../src/Episodes") -Filter "IMFaic.Probability.Episode*.cs" |
             ForEach-Object {[System.IO.Path]::GetFileNameWithoutExtension($_.FullName)} |
             ForEach-Object {$_ -replace "IMFaic.Probability.Episode", ""} |
-            Sort-Object {$_ -as [double]}, {$_}
+            Sort-Object {$_ -as [decimal]}, {$_}
     )
 }
 

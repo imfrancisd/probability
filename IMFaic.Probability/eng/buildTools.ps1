@@ -1,6 +1,6 @@
 #requires -version 5
 
-[Cmdletbinding()]
+[CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $false)]
     [string]

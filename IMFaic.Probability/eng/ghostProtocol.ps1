@@ -1,6 +1,6 @@
 #requires -version 5
 
-[cmdletbinding()]
+[CmdletBinding()]
 param(
     [string]
     $Name = "",
@@ -63,7 +63,7 @@ git fetch --all --quiet
 
 $faicBranches = @(
     git for-each-ref --format="%(refname:lstrip=3)" "refs/remotes/faic" |
-        Sort-Object {$_ -match "^episode"}, {($_ -replace "^episode") -as [double]}, {$_}
+        Sort-Object {$_ -match "^episode"}, {($_ -replace "^episode", "") -as [decimal]}, {$_}
 )
 
 
@@ -100,7 +100,7 @@ foreach ($branch in $faicBranches) {
         $episodeId = $episode
     }
 
-    $srcFile = Join-Path $PSScriptRoot "..\src\Episodes\IMFaic.Probability.Episode$($episodeId).cs"
+    $srcFile = Join-Path $PSScriptRoot "../src/Episodes/IMFaic.Probability.Episode$($episodeId).cs"
 
     if (-not (Test-Path $srcFile)) {
         #Assume that faic/$branch is not merged if IMFaic.Probability.Episode$($episodeId).cs does not exist.
@@ -114,9 +114,10 @@ foreach ($branch in $faicBranches) {
             #FORESHADOW:
             #Check if all of the following exists:
             #    public static void DoIt() in
-            #    public|protected static class Episode$($episodeId) in
-            #    Probability\Episode$($episode).cs
-            Test-Path (Join-Path $PSScriptRoot "..\..\Probability\Episode$($episode).cs")
+            #    public|protected static class Episode$($episode) in
+            #    namespace Probability in
+            #    Probability/Episode$($episode).cs
+            Test-Path (Join-Path $PSScriptRoot "../../Probability/Episode$($episode).cs")
         }
 
         @(
