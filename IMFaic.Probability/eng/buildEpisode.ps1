@@ -49,33 +49,37 @@ New-Item $libDir -ItemType "Directory" | Out-Null
 
 Write-Verbose "Compiling Probability.dll"
 
-& $tools.csc `
-"-deterministic" `
-"-noconfig" `
-"-nologo" `
-"-nostdlib" `
-"-optimize" `
-"-out:$(Join-Path $libDir "Probability.dll")" `
-"-recurse:$(Join-Path $PSScriptRoot "../../Probability/*.cs")" `
-"-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")" `
-"-reference:$(Join-Path $tools.netstandard "netstandard.dll")" `
-"-target:library"
+$compilerArgs = @(
+    "-deterministic"
+    "-noconfig"
+    "-nologo"
+    "-nostdlib"
+    "-optimize"
+    "-out:$(Join-Path $libDir "Probability.dll")"
+    "-recurse:$(Join-Path $PSScriptRoot "../../Probability/*.cs")"
+    "-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")"
+    "-reference:$(Join-Path $tools.netstandard "netstandard.dll")"
+    "-target:library"
+)
+& $tools.csc @compilerArgs
 
 
 
 Write-Verbose "Compiling IMFaic.Probability.dll"
 
-& $tools.csc `
-"-deterministic" `
-"-noconfig" `
-"-nologo" `
-"-nostdlib" `
-"-optimize" `
-"-out:$(Join-Path $libDir "IMFaic.Probability.dll")" `
-"-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")" `
-"-reference:$(Join-Path $libDir "Probability.dll")" `
-"-reference:$(Join-Path $tools.netstandard "netstandard.dll")" `
-"-target:library"
+$compilerArgs = @(
+    "-deterministic"
+    "-noconfig"
+    "-nologo"
+    "-nostdlib"
+    "-optimize"
+    "-out:$(Join-Path $libDir "IMFaic.Probability.dll")"
+    "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
+    "-reference:$(Join-Path $libDir "Probability.dll")"
+    "-reference:$(Join-Path $tools.netstandard "netstandard.dll")"
+    "-target:library"
+)
+& $tools.csc @compilerArgs
 
 
 
@@ -111,17 +115,19 @@ foreach ($episodeId in $Episode) {
 
     Write-Verbose "Compiling IMFaic.Probability.exe"
 
-    & $tools.csc `
-    "-deterministic" `
-    "-noconfig" `
-    "-nologo" `
-    "-nostdlib" `
-    "-optimize" `
-    "-out:$(Join-Path $binDir "Program.exe")" `
-    "-reference:$(Join-Path $binDir "IMFaic.Probability.dll")" `
-    "-reference:$(Join-Path $tools.netstandard "netstandard.dll")" `
-    "-target:exe" `
-    $programcs
+    $compilerArgs = @(
+        "-deterministic"
+        "-noconfig"
+        "-nologo"
+        "-nostdlib"
+        "-optimize"
+        "-out:$(Join-Path $binDir "Program.exe")"
+        "-reference:$(Join-Path $binDir "IMFaic.Probability.dll")"
+        "-reference:$(Join-Path $tools.netstandard "netstandard.dll")"
+        "-target:exe"
+        $programcs
+    )
+    & $tools.csc @compilerArgs
 
     Move-Item $(Join-Path $binDir "Program.exe") $(Join-Path $binDir "IMFaic.Probability.exe")
 
