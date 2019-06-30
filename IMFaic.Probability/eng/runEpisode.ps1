@@ -31,7 +31,7 @@ if (($null) -eq $Episode -or (0 -eq $Episode.Length)) {
 
 
 
-$runner = if ($Framework -eq "Mono") {"mono"} else {"&"}
+$runner = if ($Framework -eq "Mono") {"mono"} elseif ($Framework -eq "Core") {"dotnet"} else {"&"}
 
 foreach ($episodeId in $Episode) {
     $dir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).*.*"
