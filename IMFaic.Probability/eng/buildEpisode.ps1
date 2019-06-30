@@ -59,20 +59,6 @@ $compilerArgs = @(&{
     "-recurse:$(Join-Path $PSScriptRoot "../../Probability/*.cs")"
     "-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
-
-    if ($Framework -eq "Core") {
-        "-reference:$(Join-Path $tools.net "System.Collections.dll")"
-        "-reference:$(Join-Path $tools.net "System.Console.dll")"
-        "-reference:$(Join-Path $tools.net "System.Core.dll")"
-        "-reference:$(Join-Path $tools.net "System.IO.FileSystem.dll")"
-        "-reference:$(Join-Path $tools.net "System.Linq.dll")"
-        "-reference:$(Join-Path $tools.net "System.Runtime.dll")"
-        "-reference:$(Join-Path $tools.net "System.Runtime.Extensions.dll")"
-        "-reference:$(Join-Path $tools.net "System.Security.Cryptography.Algorithms.dll")"
-        "-reference:$(Join-Path $tools.net "System.Threading.dll")"
-        "-reference:$(Join-Path $tools.net "System.Threading.Thread.dll")"
-    }
-
     "-target:library"
 })
 & $tools.csc @compilerArgs
@@ -91,20 +77,6 @@ $compilerArgs = @(&{
     "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
     "-reference:$(Join-Path $libDir "Probability.dll")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
-
-    if ($Framework -eq "Core") {
-        "-reference:$(Join-Path $tools.net "System.Collections.dll")"
-        "-reference:$(Join-Path $tools.net "System.Console.dll")"
-        "-reference:$(Join-Path $tools.net "System.Core.dll")"
-        "-reference:$(Join-Path $tools.net "System.IO.FileSystem.dll")"
-        "-reference:$(Join-Path $tools.net "System.Linq.dll")"
-        "-reference:$(Join-Path $tools.net "System.Runtime.dll")"
-        "-reference:$(Join-Path $tools.net "System.Runtime.Extensions.dll")"
-        "-reference:$(Join-Path $tools.net "System.Security.Cryptography.Algorithms.dll")"
-        "-reference:$(Join-Path $tools.net "System.Threading.dll")"
-        "-reference:$(Join-Path $tools.net "System.Threading.Thread.dll")"
-    }
-
     "-target:library"
 })
 & $tools.csc @compilerArgs
@@ -152,20 +124,6 @@ foreach ($episodeId in $Episode) {
         "-out:$(Join-Path $binDir "Program.exe")"
         "-reference:$(Join-Path $binDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
-
-        if ($Framework -eq "Core") {
-            "-reference:$(Join-Path $tools.net "System.Collections.dll")"
-            "-reference:$(Join-Path $tools.net "System.Console.dll")"
-            "-reference:$(Join-Path $tools.net "System.Core.dll")"
-            "-reference:$(Join-Path $tools.net "System.IO.FileSystem.dll")"
-            "-reference:$(Join-Path $tools.net "System.Linq.dll")"
-            "-reference:$(Join-Path $tools.net "System.Runtime.dll")"
-            "-reference:$(Join-Path $tools.net "System.Runtime.Extensions.dll")"
-            "-reference:$(Join-Path $tools.net "System.Security.Cryptography.Algorithms.dll")"
-            "-reference:$(Join-Path $tools.net "System.Threading.dll")"
-            "-reference:$(Join-Path $tools.net "System.Threading.Thread.dll")"
-        }
-
         "-target:exe"
         $programcs
     })
