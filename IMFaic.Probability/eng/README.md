@@ -8,38 +8,36 @@ This contains all the build scripts and tools necessary to build the project.
 
 Build the episodes with buildEpisode.ps1 for powershell.exe and buildEpisode.sh for bash.
 
-**Build all episodes quietly**
+**Build all episodes**
 ```
-#From powershell.exe
-.\buildEpisode.ps1
-```
-
-**Build all episodes verbosely**
-```
-#From powershell.exe
+#From pwsh or powershell with .NET
 .\buildEpisode.ps1 -Verbose
 ```
 
 ```
-#From bash
+#From pwsh or powershell with Mono
+.\buildEpisode.ps1 -Framework Mono -Verbose
+```
+
+```
+#From bash with Mono
 ./buildEpisode.sh
 ```
 
 
-**Build some episodes quietly**
+**Build some episodes**
 ```
-#From powershell.exe
-.\buildEpisode.ps1 -Episode 1, 2, 3
-```
-
-**Build some episodes verbosely**
-```
-#From powershell.exe
+#From pwsh or powershell with .NET
 .\buildEpisode.ps1 -Episode 1, 2, 3 -Verbose
 ```
 
 ```
-#From bash
+#From pwsh or powershell with Mono
+.\buildEpisode.ps1 -Framework Mono -Episode 1, 2, 3 -Verbose
+```
+
+```
+#From bash with Mono
 ./buildEpisode.sh 1 2 3
 ```
 
@@ -47,7 +45,7 @@ Build the episodes with buildEpisode.ps1 for powershell.exe and buildEpisode.sh 
 
 # Run
 
-Run the episodes with runEpisode.ps1 for powershell.exe. The script runEpisode.ps1 is used for the automated build, but you can use it as well.
+Run the episodes with runEpisode.ps1 in pwsh or powershell. The script runEpisode.ps1 is used for the automated build, but you can use it as well.
 
 You can see the automated build output in the following link:
 
@@ -59,7 +57,7 @@ https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission
 
 # Create
 
-Create episodes with ghostProtocol.ps1 for powershell.exe by merging episode branches from [ericlippert/probability](https://github.com/ericlippert/probability) and creating their corresponding source files. The script ghostProtocol.ps1 is used for the automated build, but you can use it as well.
+Create episodes with ghostProtocol.ps1 in pwsh or powershell by merging episode branches from [ericlippert/probability](https://github.com/ericlippert/probability) and creating their corresponding source files. The script ghostProtocol.ps1 is used for the automated build, but you can use it as well.
 
 You can see the automated build output in the following link:
 
@@ -77,8 +75,8 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 |                  | **mission-impossible**  | **ghost-protocol**               |
 | ---------------- | ----------------------- | -------------------------------- |
 | **Status**       | [![Build status](https://ci.appveyor.com/api/projects/status/ykhusk01vlg1ea0l/branch/imfrancisd/mission-impossible?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible) | [![Build status](https://ci.appveyor.com/api/projects/status/h8voysbh93asgajq/branch/imfrancisd/mission-impossible-ghost-protocol?svg=true)](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol) |
-| **Schedule**     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC              |
-| **Description**  | Build & run episodes.   | Create, build, & run episodes.   |
+| **Schedule**     | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC                |
+| **Description**  | Build, Run              | Create, Build, Run               |
 | **OS**           | Windows                 | Windows                          |
 | **Shell**        | powershell              | powershell                       |
 | **Links**        | [build](https://ci.appveyor.com/project/imfrancisd/probability/branch/imfrancisd/mission-impossible), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability/build/artifacts) | [build](https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/mission-impossible-ghost-protocol), [artifacts](https://ci.appveyor.com/project/imfrancisd/probability-62n01/build/artifacts) |
@@ -89,8 +87,8 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 |                  | **mission-impossible**  | **ghost-protocol**      | **mission-impossible**  | **ghost-protocol**      |
 | ---------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
 | **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-ubuntu1604-bash?branchName=imfrancisd/mission-impossible)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-ubuntu-pwsh-mono?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=2&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/mission-impossible-macOS-bash-mono-clone?branchName=imfrancisd/mission-impossible)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=3&branchName=imfrancisd/mission-impossible) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-macos-pwsh-mono?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=4&branchName=imfrancisd/mission-impossible-ghost-protocol) |
-| **Schedule**     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     |
-| **Description**  | Build & run episodes.   | Build & run episodes.   | Build & run episodes.   | Build & run episodes.   |
+| **Schedule**     | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       |
+| **Description**  | Build, Run              | Create, Build, Run      | Build, Run              | Create, Build, Run      |
 | **OS**           | Ubuntu                  | Ubuntu                  | macOS                   | macOS                   |
 | **Shell**        | bash                    | pwsh                    | bash                    | pwsh                    |
 | **Links**        | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=1&branchName=imfrancisd/mission-impossible) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=2&branchName=imfrancisd/mission-impossible-ghost-protocol) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=3&branchName=imfrancisd/mission-impossible) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=4&branchName=imfrancisd/mission-impossible-ghost-protocol) |
@@ -101,8 +99,8 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 |                  | **ghost-protocol**      | **ghost-protocol**      | **ghost-protocol**      | **ghost-protocol**      |
 | ---------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
 | **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-windows-powershell-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=5&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-windows-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=6&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-ubuntu-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=7&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-macos-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=8&branchName=imfrancisd/mission-impossible-ghost-protocol) |
-| **Schedule**     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     | Mon - Fri 20:00 UTC     |
-| **Description**  | Build & run episodes.   | Build & run episodes.   | Build & run episodes.   | Build & run episodes.   |
+| **Schedule**     | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       | Mon-Fri 20:00 UTC       |
+| **Description**  | Create, Build, Run      | Create, Build, Run      | Create, Build, Run      | Create, Build, Run      |
 | **OS**           | Windows                 | Windows                 | Ubuntu                  | macOS                   |
 | **Shell**        | powershell              | pwsh                    | pwsh                    | pwsh                    |
 | **Links**        | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=5&branchName=imfrancisd/mission-impossible-ghost-protocol) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=6&branchName=imfrancisd/mission-impossible-ghost-protocol) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=7&branchName=imfrancisd/mission-impossible-ghost-protocol) | [build and artifacts](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=8&branchName=imfrancisd/mission-impossible-ghost-protocol) |
