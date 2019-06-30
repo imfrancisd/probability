@@ -84,10 +84,20 @@ else {
 
 
 
-Write-Verbose "Get .NET Standard reference assemblies."
-getNugetPackage -Name "netstandard.library" -Version "2.0.3" -Sha512 "e78f0cea69c14895b1b089644077dbce8631a626055d96522f4d29e061d8bfc3e48aa1419e74faf265b998612c03f721f5f0cef4690f824150a5689764dee601"
+if ($Framework -eq "Core") {
+    Write-Verbose "Get .NET Core reference assemblies."
+    getNugetPackage -Name "microsoft.netcore.app" -Version "2.2.5" -Sha512 "5769f99c78e4f482249a7f461e9ac3c4a2277bb4d2338a822d1ab3f02d6658529469a3d7de08972d64a95323f6142d8ef7f2f1684dd80d78e5c1d49fe9811225"
 
-$tools.netstandard = Join-Path $OutputDirectory "netstandard.library/2.0.3/build/netstandard2.0/ref"
+    $tools.netcore = Join-Path $OutputDirectory "microsoft.netcore.app/2.2.5/ref/netcoreapp2.2"
+    $tools.net = $tools.netcore
+}
+else {
+    Write-Verbose "Get .NET Standard reference assemblies."
+    getNugetPackage -Name "netstandard.library" -Version "2.0.3" -Sha512 "e78f0cea69c14895b1b089644077dbce8631a626055d96522f4d29e061d8bfc3e48aa1419e74faf265b998612c03f721f5f0cef4690f824150a5689764dee601"
+
+    $tools.netstandard = Join-Path $OutputDirectory "netstandard.library/2.0.3/build/netstandard2.0/ref"
+    $tools.net = $tools.netstandard
+}
 
 
 
