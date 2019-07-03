@@ -124,7 +124,7 @@ foreach ($episodeId in $Episode) {
         "-out:$(Join-Path $binDir "Program.exe")"
         "-reference:$(Join-Path $binDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
-        "-target:$(if ($Framework -eq "Core") {"library"} else {"exe"})"
+        "-target:exe"
         $programcs
     })
     & $tools.csc @compilerArgs
