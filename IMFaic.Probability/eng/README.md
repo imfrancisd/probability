@@ -16,7 +16,7 @@ Build the episodes with buildEpisode.ps1 for powershell.exe and buildEpisode.sh 
 
 ```
 #From pwsh or powershell with Mono
-.\buildEpisode.ps1 -Framework Mono -Verbose
+./buildEpisode.ps1 -Framework Mono -Verbose
 ```
 
 ```
@@ -33,7 +33,7 @@ Build the episodes with buildEpisode.ps1 for powershell.exe and buildEpisode.sh 
 
 ```
 #From pwsh or powershell with Mono
-.\buildEpisode.ps1 -Framework Mono -Episode 1, 2, 3 -Verbose
+./buildEpisode.ps1 -Framework Mono -Episode 1, 2, 3 -Verbose
 ```
 
 ```
