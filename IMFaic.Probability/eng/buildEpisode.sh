@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -u
-
+unalias -a
 SCRIPTROOT="$( dirname "${BASH_SOURCE[0]}" )"
 
 
