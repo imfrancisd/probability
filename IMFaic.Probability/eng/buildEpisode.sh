@@ -76,10 +76,10 @@ NETSTANDARD="${SCRIPTROOT}/../packages/netstandard.library/2.0.3/build/netstanda
 
 
 
-LIBDIR="${SCRIPTROOT}/../obj/lib"
+OBJLIBDIR="${SCRIPTROOT}/../obj/lib"
 
-rm -rf "${LIBDIR}"
-mkdir -p "${LIBDIR}"
+rm -rf "${OBJLIBDIR}"
+mkdir -p "${OBJLIBDIR}"
 
 
 
@@ -91,7 +91,7 @@ mono "${CSCEXE}" \
 -nologo \
 -nostdlib \
 -optimize \
--out:"${LIBDIR}/Probability.dll" \
+-out:"${OBJLIBDIR}/Probability.dll" \
 -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
 -recurse:"${SCRIPTROOT}/../prb/*.cs" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
@@ -107,9 +107,9 @@ mono "${CSCEXE}" \
 -nologo \
 -nostdlib \
 -optimize \
--out:"${LIBDIR}/IMFaic.Probability.dll" \
+-out:"${OBJLIBDIR}/IMFaic.Probability.dll" \
 -recurse:"${SCRIPTROOT}/../src/*.cs" \
--reference:"${LIBDIR}/Probability.dll" \
+-reference:"${OBJLIBDIR}/Probability.dll" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
 -target:"library"
 
@@ -120,15 +120,16 @@ do
 
     echo "Build Episode${EPISODENUMBER}"
 
-    BINDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0"
-    OBJDIR="${SCRIPTROOT}/../obj/IMFaic.Probability/${EPISODENUMBER}.1.0"
+    PKGLIBDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/lib/netstandard2.0"
+    PKGTOOLSDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/tools/netstandard2.0"
 
-    rm -rf "${BINDIR}" "${OBJDIR}"
-    mkdir -p "${BINDIR}" "${OBJDIR}"
+    rm -rf "${PKGTOOLSDIR}" "${PKGLIBDIR}"
+    mkdir -p "${PKGTOOLSDIR}" "${PKGLIBDIR}"
 
-    cp "${LIBDIR}/"*.dll "${BINDIR}/"
+    cp "${OBJLIBDIR}/"*.dll "${PKGLIBDIR}/"
+    cp "${OBJLIBDIR}/"*.dll "${PKGTOOLSDIR}/"
 
-    PROGRAMCS="${OBJDIR}/Program.cs"
+    PROGRAMCS="${PKGTOOLSDIR}/Program.cs"
     echo "
     public class Program
     {
@@ -149,17 +150,19 @@ do
     -nologo \
     -nostdlib \
     -optimize \
-    -out:"${BINDIR}/Program.exe" \
-    -reference:"${BINDIR}/IMFaic.Probability.dll" \
+    -out:"${PKGTOOLSDIR}/Program.exe" \
+    -reference:"${PKGTOOLSDIR}/IMFaic.Probability.dll" \
     -reference:"${NETSTANDARD}/netstandard.dll" \
     -target:"exe" \
     "${PROGRAMCS}"
 
-    mv "${BINDIR}/Program.exe" "${BINDIR}/IMFaic.Probability.exe"
+    mv "${PKGTOOLSDIR}/Program.exe" "${PKGTOOLSDIR}/IMFaic.Probability.exe"
 
     if [ "${EPISODENUMBER}" == "25" ]
     then
-        cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${BINDIR}/"
+        cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${PKGTOOLSDIR}/"
     fi
+
+    rm -rf "${PROGRAMCS}"
 
 done
