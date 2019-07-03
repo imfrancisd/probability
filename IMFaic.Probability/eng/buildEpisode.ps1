@@ -132,6 +132,21 @@ foreach ($episodeId in $Episode) {
     if ($framework -ne "Core") {
         Move-Item $(Join-Path $binDir "Program.exe") $(Join-Path $binDir "IMFaic.Probability.exe")
     }
+@'
+{
+    "runtimeOptions": {
+    "tfm": "netcoreapp2.1",
+    "framework": {
+        "name": "Microsoft.NETCore.App",
+        "version": "2.1.0"
+    },
+    "rollForwardOnNoCandidateFx": 2,
+    "configProperties": {
+        "System.GC.Server": true
+    }
+    }
+}
+'@ | Out-File $(Join-Path $binDir "Program.runtimeconfig.json")
 
     if ($episodeId -eq "25") {
         Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $binDir
