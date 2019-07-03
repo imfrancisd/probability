@@ -35,7 +35,12 @@ $runner = if ($Framework -eq "Mono") {"mono"} elseif ($Framework -eq "Core") {"d
 
 foreach ($episodeId in $Episode) {
     $dir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).*.*"
-    $exe = @(Get-ChildItem -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
+    if ($Framework -eq "Core") {
+        $exe = @(Get-ChildItem -Path $dir -Filter "Program.dll" -Recurse | Sort-Object "FullName")
+    }
+    else {
+        $exe = @(Get-ChildItem -Path $dir -Filter "IMFaic.Probability.exe" -Recurse | Sort-Object "FullName")
+    }
     foreach ($item in $exe) {
         $cmd = [scriptblock]::Create("`"`" | $($runner) $($item.FullName)")
 
