@@ -104,3 +104,14 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 | **OS**           | Windows                 | Windows                 | Ubuntu                  | macOS                   |
 | **Shell**        | powershell              | pwsh                    | pwsh                    | pwsh                    |
 | **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=5&_a=summary) | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=6&_a=summary) | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=7&_a=summary) | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=8&_a=summary) |
+
+**Reconnaissance**
+
+|                  | **dotnet-reconnaissance** |
+| ---------------- | ------------------------- |
+| **Status**       | complete                  |
+| **Schedule**     | never                     |
+| **Description**  | get dotnet build output   |
+| **OS**           | Ubuntu                    |
+| **Shell**        | pwsh                      |
+| **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=9&_a=summary) |
