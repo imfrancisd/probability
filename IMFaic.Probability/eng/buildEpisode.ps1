@@ -137,7 +137,7 @@ foreach ($episodeId in $Episode) {
 
 
 
-    Write-Verbose "Compiling netcoreapp Program.dll"
+    Write-Verbose "Compiling netcoreapp IMFaic.Probability.dll"
 
     Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetcoreappDir
     Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
