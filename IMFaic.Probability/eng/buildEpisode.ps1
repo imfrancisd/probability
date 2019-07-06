@@ -99,13 +99,12 @@ foreach ($episodeId in $Episode) {
         New-Item $directory -ItemType "Directory" | Out-Null
     }
 
-    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgLibNetstandardDir
-    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetstandardDir
-    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
-
 
 
     Write-Verbose "Compiling netstandard IMFaic.Probability.exe"
+
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgLibNetstandardDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetstandardDir
 
     $programcs = Join-Path $pkgToolsNetstandardDir "Program.cs"
     @(
@@ -140,13 +139,16 @@ foreach ($episodeId in $Episode) {
 
     Write-Verbose "Compiling netcoreapp Program.dll"
 
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetcoreappDir
+    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
+
     $programcs = Join-Path $pkgToolsNetcoreappDir "Program.cs"
     @(
         "public class Program",
         "{",
         "    public static void Main(string[] args)",
         "    {",
-        "        System.Console.WriteLine(`"Hello World!`");",
+        "        IMFaic.Probability.Episode$($episodeId).Run(args);",
         "    }",
         "}"
     ) | Out-File -FilePath $programcs -Encoding utf8 -Force
@@ -158,6 +160,8 @@ foreach ($episodeId in $Episode) {
         "-nostdlib"
         "-optimize"
         "-out:$(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.dll")"
+        "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
+        "-reference:$(Join-Path $pkgToolsNetcoreappDir "Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
         $programcs
