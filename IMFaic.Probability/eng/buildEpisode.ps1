@@ -146,5 +146,5 @@ foreach ($episodeId in $Episode) {
     Write-Verbose "Compiling $($pkgToolsNetcoreappDir)."
     Copy-Item $(Join-Path $pkgToolsNetstandardDir "*") -Destination $pkgToolsNetcoreappDir -Recurse
     Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
-    Move-Item $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe") -Destination $(Join-Path $pkgToolsNetcoreappDir "app.dll")
+    Move-Item $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe") -Destination $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe.dll")
 }
