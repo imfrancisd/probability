@@ -35,7 +35,7 @@ $runner = if ($Framework -eq "Mono") {"mono"} elseif ($Framework -eq "Core") {"d
 
 foreach ($episodeId in $Episode) {
     if ($Framework -eq "Core") {
-        $dir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).*.*/tools/netcoreapp2.1"
+        $dir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).*.*/tools/netcoreapp2.0"
         $exe = @(Get-ChildItem -Path $dir -Filter "IMFaic.Probability.exe.dll" -Recurse | Sort-Object "FullName")
     }
     else {
