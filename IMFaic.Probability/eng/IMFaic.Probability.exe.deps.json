@@ -26,15 +26,18 @@
   "libraries": {
     "IMFaic.Probability.exe": {
       "type": "project",
-      "serviceable": false
+      "serviceable": false,
+      "sha512": ""
     },
     "Probability": {
       "type": "project",
-      "serviceable": false
+      "serviceable": false,
+      "sha512": ""
     },
     "IMFaic.Probability": {
       "type": "project",
-      "serviceable": false
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
