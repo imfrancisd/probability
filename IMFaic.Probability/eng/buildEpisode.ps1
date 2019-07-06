@@ -162,9 +162,6 @@ foreach ($episodeId in $Episode) {
 
     @(
         "{"
-        "  `"runtimeTarget`": {"
-        "    `"name`": `".NETCoreApp,Version=v2.1`""
-        "  },"
         "  `"targets`": {"
         "    `".NETCoreApp,Version=v2.1`": {"
         "      `"IMFaic.Probability.exe`": {"
