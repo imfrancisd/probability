@@ -163,8 +163,7 @@ foreach ($episodeId in $Episode) {
     @(
         "{"
         "  `"runtimeTarget`": {"
-        "    `"name`": `".NETCoreApp,Version=v2.1`","
-        "    `"signature`": `"da39a3ee5e6b4b0d3255bfef95601890afd80709`""
+        "    `"name`": `".NETCoreApp,Version=v2.1`""
         "  },"
         "  `"targets`": {"
         "    `".NETCoreApp,Version=v2.1`": {"
