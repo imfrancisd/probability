@@ -6,6 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "app/0.0.0": {
+        "runtime": {
+          "app.dll": {}
+        }
+      },
       "Probability/0.0.0": {
         "runtime": {
           "Probability.dll": {}
@@ -19,6 +24,11 @@
     }
   },
   "libraries": {
+    "app/0.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Probability/0.0.0": {
       "type": "project",
       "serviceable": false,

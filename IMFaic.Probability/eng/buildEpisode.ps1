@@ -101,7 +101,7 @@ foreach ($episodeId in $Episode) {
 
 
 
-    Write-Verbose "Compiling netstandard IMFaic.Probability.exe"
+    Write-Verbose "Compiling $($pkgToolsNetstandardDir)."
 
     Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgLibNetstandardDir
     Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetstandardDir
@@ -133,50 +133,16 @@ foreach ($episodeId in $Episode) {
 
     Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
 
-    Remove-Item $programcs -Force
-
-
-
-    Write-Verbose "Compiling netcoreapp IMFaic.Probability.dll"
-
-    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetcoreappDir
-    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
-
-    $programcs = Join-Path $pkgToolsNetcoreappDir "Program.cs"
-    @(
-        "namespace IMFaic.Probability",
-        "{",
-        "    public class Program",
-        "    {",
-        "        public static void Main(string[] args)",
-        "        {",
-        "            IMFaic.Probability.Episode$($episodeId).Run(args);",
-        "        }",
-        "    }"
-        "}"
-    ) | Out-File -FilePath $programcs -Encoding utf8 -Force
-
-    $compilerArgs = @(&{
-        "-deterministic"
-        "-noconfig"
-        "-nologo"
-        "-nostdlib"
-        "-optimize"
-        "-out:$(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.dll")"
-        "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
-        "-reference:$(Join-Path $pkgToolsNetcoreappDir "Probability.dll")"
-        "-reference:$(Join-Path $tools.net "netstandard.dll")"
-        "-target:exe"
-        $programcs
-    })
-    & $tools.csc @compilerArgs
-
-    Remove-Item $programcs -Force
-
-
-
     if ($episodeId -eq "25") {
         Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsNetstandardDir
-        Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsNetcoreappDir
     }
+
+    Remove-Item $programcs -Force
+
+
+
+    Write-Verbose "Compiling $($pkgToolsNetcoreappDir)."
+    Copy-Item $(Join-Path $pkgToolsNetstandardDir "*") -Destination $pkgToolsNetcoreappDir -Recurse
+    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
+    Move-Item $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe") -Destination $(Join-Path $pkgToolsNetcoreappDir "app.dll")
 }
