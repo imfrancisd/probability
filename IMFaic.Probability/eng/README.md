@@ -98,7 +98,7 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 
 |                  | **ghost-protocol**      | **ghost-protocol**      | **ghost-protocol**      | **ghost-protocol**      |
 | ---------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| **Status**       | pc load letter          | pc load letter          | pc load letter          | pc load letter          |
+| **Status**       | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-windows-powershell-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=5&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-windows-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=6&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-ubuntu-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=7&branchName=imfrancisd/mission-impossible-ghost-protocol) | [![Build Status](https://dev.azure.com/imfrancisd/IMFaic.Probability/_apis/build/status/ghost-protocol-macos-pwsh-netcore?branchName=imfrancisd/mission-impossible-ghost-protocol)](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build/latest?definitionId=8&branchName=imfrancisd/mission-impossible-ghost-protocol) |
 | **Schedule**     | none                    | none                    | none                    | none                    |
 | **Description**  | Create, Build, Run      | Create, Build, Run      | Create, Build, Run      | Create, Build, Run      |
 | **OS**           | Windows                 | Windows                 | Ubuntu                  | macOS                   |
@@ -113,5 +113,5 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 | **Schedule**     | never                     |
 | **Description**  | get dotnet build output   |
 | **OS**           | Ubuntu                    |
-| **Shell**        | pwsh                      |
+| **Shell**        | bash                      |
 | **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=9&_a=summary) |
