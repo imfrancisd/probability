@@ -39,11 +39,13 @@ $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot
 
 $objLibNetstandardDir = Join-Path $PSScriptRoot "../obj/lib/netstandard2.0"
 
-if (Test-Path $objLibNetstandardDir) {
-    Remove-Item $objLibNetstandardDir -Recurse -Force
-}
+foreach ($directory in @($objLibNetstandardDir)) {
+    if (Test-Path $directory) {
+        Remove-Item $directory -Recurse -Force
+    }
 
-New-Item $objLibNetstandardDir -ItemType "Directory" | Out-Null
+    New-Item $directory -ItemType "Directory" | Out-Null
+}
 
 
 
@@ -91,7 +93,7 @@ foreach ($episodeId in $Episode) {
     $pkgToolsNetstandardDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netstandard2.0"
     $pkgToolsNetcoreappDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netcoreapp2.1"
 
-    foreach ($directory in @($pkgToolsNetcoreappDir, $pkgToolsNetstandardDir, $pkgLibNetstandardDir)) {
+    foreach ($directory in @($pkgLibNetstandardDir, $pkgToolsNetstandardDir, $pkgToolsNetcoreappDir)) {
         if (Test-Path $directory) {
             Remove-Item $directory -Recurse -Force
         }
@@ -145,6 +147,62 @@ foreach ($episodeId in $Episode) {
 
     Write-Verbose "Compiling $($pkgToolsNetcoreappDir)."
     Copy-Item $(Join-Path $pkgToolsNetstandardDir "*") -Destination $pkgToolsNetcoreappDir -Recurse
-    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
     Move-Item $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe") -Destination $(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe.dll")
+
+    @(
+        "{",
+        "  `"runtimeOptions`": {",
+        "    `"framework`": {",
+        "      `"name`": `"Microsoft.NETCore.App`",",
+        "      `"version`": `"2.1.0`"",
+        "    }",
+        "  }",
+        "}"
+    ) | Out-File -FilePath (Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe.runtimeconfig.json") -Encoding ascii -Force
+
+    @(
+        "{"
+        "  `"runtimeTarget`": {"
+        "    `"name`": `".NETCoreApp,Version=v2.1`","
+        "    `"signature`": `"da39a3ee5e6b4b0d3255bfef95601890afd80709`""
+        "  },"
+        "  `"compilationOptions`": {},"
+        "  `"targets`": {"
+        "    `".NETCoreApp,Version=v2.1`": {"
+        "      `"IMFaic.Probability.exe`": {"
+        "        `"runtime`": {"
+        "          `"IMFaic.Probability.exe.dll`": {}"
+        "        }"
+        "      },"
+        "      `"Probability`": {"
+        "        `"runtime`": {"
+        "          `"Probability.dll`": {}"
+        "        }"
+        "      },"
+        "      `"IMFaic.Probability`": {"
+        "        `"runtime`": {"
+        "          `"IMFaic.Probability.dll`": {}"
+        "        }"
+        "      }"
+        "    }"
+        "  },"
+        "  `"libraries`": {"
+        "    `"IMFaic.Probability.exe`": {"
+        "      `"type`": `"project`","
+        "      `"serviceable`": false,"
+        "      `"sha512`": `"`""
+        "    },"
+        "    `"Probability`": {"
+        "      `"type`": `"project`","
+        "      `"serviceable`": false,"
+        "      `"sha512`": `"`""
+        "    },"
+        "    `"IMFaic.Probability`": {"
+        "      `"type`": `"project`","
+        "      `"serviceable`": false,"
+        "      `"sha512`": `"`""
+        "    }"
+        "  }"
+        "}"
+    ) | Out-File -FilePath (Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.exe.deps.json") -Encoding ascii -Force
 }
