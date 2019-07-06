@@ -10,7 +10,7 @@
         "runtime": {
           "Probability.dll": {}
         }
-      }
+      },
       "IMFaic.Probability/0.0.0": {
         "runtime": {
           "IMFaic.Probability.dll": {}
@@ -23,7 +23,7 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    }
+    },
     "IMFaic.Probability/0.0.0": {
       "type": "project",
       "serviceable": false,
