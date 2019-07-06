@@ -144,12 +144,15 @@ foreach ($episodeId in $Episode) {
 
     $programcs = Join-Path $pkgToolsNetcoreappDir "Program.cs"
     @(
-        "public class Program",
+        "namespace IMFaic.Probability",
         "{",
-        "    public static void Main(string[] args)",
+        "    public class Program",
         "    {",
-        "        IMFaic.Probability.Episode$($episodeId).Run(args);",
-        "    }",
+        "        public static void Main(string[] args)",
+        "        {",
+        "            IMFaic.Probability.Episode$($episodeId).Run(args);",
+        "        }",
+        "    }"
         "}"
     ) | Out-File -FilePath $programcs -Encoding utf8 -Force
 
