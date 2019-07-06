@@ -131,6 +131,8 @@ foreach ($episodeId in $Episode) {
     })
     & $tools.csc @compilerArgs
 
+    #Renaming Program.exe as IMFaic.Probability.exe instead of compiling as Program.exe
+    #to avoid TypeLoadException and MissingMethodException at runtime.
     Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
 
     if ($episodeId -eq "25") {
