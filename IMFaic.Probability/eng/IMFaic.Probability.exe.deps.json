@@ -6,17 +6,17 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "IMFaic.Probability.exe/0.0.0": {
+      "IMFaic.Probability.exe": {
         "runtime": {
           "IMFaic.Probability.exe.dll": {}
         }
       },
-      "Probability/0.0.0": {
+      "Probability": {
         "runtime": {
           "Probability.dll": {}
         }
       },
-      "IMFaic.Probability/0.0.0": {
+      "IMFaic.Probability": {
         "runtime": {
           "IMFaic.Probability.dll": {}
         }
@@ -24,17 +24,17 @@
     }
   },
   "libraries": {
-    "IMFaic.Probability.exe/0.0.0": {
+    "IMFaic.Probability.exe": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Probability/0.0.0": {
+    "Probability": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "IMFaic.Probability/0.0.0": {
+    "IMFaic.Probability": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
