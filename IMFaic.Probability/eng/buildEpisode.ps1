@@ -166,7 +166,6 @@ foreach ($episodeId in $Episode) {
         "    `"name`": `".NETCoreApp,Version=v2.1`","
         "    `"signature`": `"da39a3ee5e6b4b0d3255bfef95601890afd80709`""
         "  },"
-        "  `"compilationOptions`": {},"
         "  `"targets`": {"
         "    `".NETCoreApp,Version=v2.1`": {"
         "      `"IMFaic.Probability.exe`": {"
