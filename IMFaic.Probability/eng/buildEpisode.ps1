@@ -91,7 +91,7 @@ foreach ($episodeId in $Episode) {
 
     $pkgLibNetstandardDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/lib/netstandard2.0"
     $pkgToolsNetstandardDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netstandard2.0"
-    $pkgToolsNetcoreappDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netcoreapp2.1"
+    $pkgToolsNetcoreappDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netcoreapp2.0"
 
     foreach ($directory in @($pkgLibNetstandardDir, $pkgToolsNetstandardDir, $pkgToolsNetcoreappDir)) {
         if (Test-Path $directory) {
@@ -154,7 +154,7 @@ foreach ($episodeId in $Episode) {
         "  `"runtimeOptions`": {",
         "    `"framework`": {",
         "      `"name`": `"Microsoft.NETCore.App`",",
-        "      `"version`": `"2.1.0`"",
+        "      `"version`": `"2.0.0`"",
         "    }",
         "  }",
         "}"
@@ -163,10 +163,10 @@ foreach ($episodeId in $Episode) {
     @(
         "{"
         "  `"runtimeTarget`": {"
-        "    `"name`": `".NETCoreApp,Version=v2.1`""
+        "    `"name`": `".NETCoreApp,Version=v2.0`""
         "  },"
         "  `"targets`": {"
-        "    `".NETCoreApp,Version=v2.1`": {"
+        "    `".NETCoreApp,Version=v2.0`": {"
         "      `"IMFaic.Probability.exe`": {"
         "        `"runtime`": {"
         "          `"IMFaic.Probability.exe.dll`": {}"
