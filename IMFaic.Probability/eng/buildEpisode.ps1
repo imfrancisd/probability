@@ -164,7 +164,7 @@ foreach ($episodeId in $Episode) {
     })
     & $tools.csc @compilerArgs
 
-    Move-Item $(Join-Path $pkgToolsNetcoreappDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "Program.dll") -Force
+    Move-Item $(Join-Path $pkgToolsNetcoreappDir "Program.exe") $(Join-Path $pkgToolsNetcoreappDir "Program.dll")
 
     Remove-Item $programcs -Force
 
