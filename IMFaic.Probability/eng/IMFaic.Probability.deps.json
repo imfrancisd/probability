@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "Program/0.0.0": {
+      "IMFaic.Probability/0.0.0": {
         "runtime": {
-          "Program.dll": {}
+          "IMFaic.Probability.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Program/0.0.0": {
+    "IMFaic.Probability/0.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

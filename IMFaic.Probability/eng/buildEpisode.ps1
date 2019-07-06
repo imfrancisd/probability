@@ -157,14 +157,12 @@ foreach ($episodeId in $Episode) {
         "-nologo"
         "-nostdlib"
         "-optimize"
-        "-out:$(Join-Path $pkgToolsNetcoreappDir "Program.exe")"
+        "-out:$(Join-Path $pkgToolsNetcoreappDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
         $programcs
     })
     & $tools.csc @compilerArgs
-
-    Move-Item $(Join-Path $pkgToolsNetcoreappDir "Program.exe") $(Join-Path $pkgToolsNetcoreappDir "Program.dll")
 
     Remove-Item $programcs -Force
 
