@@ -123,15 +123,13 @@ foreach ($episodeId in $Episode) {
         "-nologo"
         "-nostdlib"
         "-optimize"
-        "-out:$(Join-Path $pkgToolsNetstandardDir "Program.exe")"
+        "-out:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")"
         "-reference:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
         $programcs
     })
     & $tools.csc @compilerArgs
-
-    Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
 
     if ($episodeId -eq "25") {
         Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsNetstandardDir
