@@ -52,12 +52,14 @@ foreach ($directory in @($objLibNetstandardDir)) {
 Write-Verbose "Compiling Probability.dll"
 
 $compilerArgs = @(&{
+    "-debug:pdbonly"
     "-deterministic"
     "-noconfig"
     "-nologo"
     "-nostdlib"
     "-optimize"
     "-out:$(Join-Path $objLibNetstandardDir "Probability.dll")"
+    "-pdb:$(Join-Path $objLibNetstandardDir "Probability.pdb")"
     "-recurse:$(Join-Path $PSScriptRoot "../../Probability/*.cs")"
     "-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
@@ -70,12 +72,14 @@ $compilerArgs = @(&{
 Write-Verbose "Compiling IMFaic.Probability.dll"
 
 $compilerArgs = @(&{
+    "-debug:pdbonly"
     "-deterministic"
     "-noconfig"
     "-nologo"
     "-nostdlib"
     "-optimize"
     "-out:$(Join-Path $objLibNetstandardDir "IMFaic.Probability.dll")"
+    "-pdb:$(Join-Path $objLibNetstandardDir "IMFaic.Probability.pdb")"
     "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
     "-reference:$(Join-Path $objLibNetstandardDir "Probability.dll")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
@@ -105,8 +109,8 @@ foreach ($episodeId in $Episode) {
 
     Write-Verbose "Compiling $($pkgToolsNetstandardDir)."
 
-    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgLibNetstandardDir
-    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetstandardDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*") -Destination $pkgLibNetstandardDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*") -Destination $pkgToolsNetstandardDir
 
     $programcs = Join-Path $pkgToolsNetstandardDir "Program.cs"
     @(

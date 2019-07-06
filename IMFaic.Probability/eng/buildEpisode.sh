@@ -86,12 +86,14 @@ mkdir -p "${OBJLIBDIR}"
 echo "Compiling Probability.dll"
 
 mono "${CSCEXE}" \
+-debug:pdbonly \
 -deterministic \
 -noconfig \
 -nologo \
 -nostdlib \
 -optimize \
 -out:"${OBJLIBDIR}/Probability.dll" \
+-pdb:"${OBJLIBDIR}/Probability.pdb" \
 -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
 -recurse:"${SCRIPTROOT}/../prb/*.cs" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
@@ -102,12 +104,14 @@ mono "${CSCEXE}" \
 echo "Compiling IMFaic.Probability.dll"
 
 mono "${CSCEXE}" \
+-debug:pdbonly \
 -deterministic \
 -noconfig \
 -nologo \
 -nostdlib \
 -optimize \
 -out:"${OBJLIBDIR}/IMFaic.Probability.dll" \
+-pdb:"${OBJLIBDIR}/IMFaic.Probability.pdb" \
 -recurse:"${SCRIPTROOT}/../src/*.cs" \
 -reference:"${OBJLIBDIR}/Probability.dll" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
@@ -126,8 +130,8 @@ do
     rm -rf "${PKGTOOLSDIR}" "${PKGLIBDIR}"
     mkdir -p "${PKGTOOLSDIR}" "${PKGLIBDIR}"
 
-    cp "${OBJLIBDIR}/"*.dll "${PKGLIBDIR}/"
-    cp "${OBJLIBDIR}/"*.dll "${PKGTOOLSDIR}/"
+    cp "${OBJLIBDIR}/"* "${PKGLIBDIR}/"
+    cp "${OBJLIBDIR}/"* "${PKGTOOLSDIR}/"
 
     PROGRAMCS="${PKGTOOLSDIR}/Program.cs"
     echo "
