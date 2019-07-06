@@ -37,13 +37,13 @@ $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot
 
 
 
-$objLibDir = Join-Path $PSScriptRoot "../obj/lib"
+$objLibNetstandardDir = Join-Path $PSScriptRoot "../obj/lib/netstandard2.0"
 
-if (Test-Path $objLibDir) {
-    Remove-Item $objLibDir -Recurse -Force
+if (Test-Path $objLibNetstandardDir) {
+    Remove-Item $objLibNetstandardDir -Recurse -Force
 }
 
-New-Item $objLibDir -ItemType "Directory" | Out-Null
+New-Item $objLibNetstandardDir -ItemType "Directory" | Out-Null
 
 
 
@@ -55,7 +55,7 @@ $compilerArgs = @(&{
     "-nologo"
     "-nostdlib"
     "-optimize"
-    "-out:$(Join-Path $objLibDir "Probability.dll")"
+    "-out:$(Join-Path $objLibNetstandardDir "Probability.dll")"
     "-recurse:$(Join-Path $PSScriptRoot "../../Probability/*.cs")"
     "-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
@@ -73,9 +73,9 @@ $compilerArgs = @(&{
     "-nologo"
     "-nostdlib"
     "-optimize"
-    "-out:$(Join-Path $objLibDir "IMFaic.Probability.dll")"
+    "-out:$(Join-Path $objLibNetstandardDir "IMFaic.Probability.dll")"
     "-recurse:$(Join-Path $PSScriptRoot "../src/*.cs")"
-    "-reference:$(Join-Path $objLibDir "Probability.dll")"
+    "-reference:$(Join-Path $objLibNetstandardDir "Probability.dll")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
     "-target:library"
 })
@@ -87,10 +87,11 @@ foreach ($episodeId in $Episode) {
 
     Write-Verbose "Build Episode$($episodeId)."
 
-    $pkgLibDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/lib/netstandard2.0"
-    $pkgToolsDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netstandard2.0"
+    $pkgLibNetstandardDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/lib/netstandard2.0"
+    $pkgToolsNetstandardDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netstandard2.0"
+    $pkgToolsNetcoreappDir = Join-Path $PSScriptRoot "../bin/IMFaic.Probability/$($episodeId).1.0/tools/netcoreapp2.1"
 
-    foreach ($directory in @($pkgToolsDir, $pkgLibDir)) {
+    foreach ($directory in @($pkgToolsNetcoreappDir, $pkgToolsNetstandardDir, $pkgLibNetstandardDir)) {
         if (Test-Path $directory) {
             Remove-Item $directory -Recurse -Force
         }
@@ -98,10 +99,12 @@ foreach ($episodeId in $Episode) {
         New-Item $directory -ItemType "Directory" | Out-Null
     }
 
-    Copy-Item $(Join-Path $objLibDir "*.dll") -Destination $pkgLibDir
-    Copy-Item $(Join-Path $objLibDir "*.dll") -Destination $pkgToolsDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgLibNetstandardDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetstandardDir
+    Copy-Item $(Join-Path $objLibNetstandardDir "*.dll") -Destination $pkgToolsNetcoreappDir
+    Copy-Item $(Join-Path $PSScriptRoot "*.json") -Destination $pkgToolsNetcoreappDir
 
-    $programcs = Join-Path $pkgToolsDir "Program.cs"
+    $programcs = Join-Path $pkgToolsNetstandardDir "Program.cs"
     @(
         "public class Program",
         "{",
@@ -122,18 +125,18 @@ foreach ($episodeId in $Episode) {
         "-nologo"
         "-nostdlib"
         "-optimize"
-        "-out:$(Join-Path $pkgToolsDir "Program.exe")"
-        "-reference:$(Join-Path $pkgToolsDir "IMFaic.Probability.dll")"
+        "-out:$(Join-Path $pkgToolsNetstandardDir "Program.exe")"
+        "-reference:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
         $programcs
     })
     & $tools.csc @compilerArgs
 
-    Move-Item $(Join-Path $pkgToolsDir "Program.exe") $(Join-Path $pkgToolsDir "IMFaic.Probability.exe")
+    Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
 
     if ($episodeId -eq "25") {
-        Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsDir
+        Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsNetstandardDir
     }
 
     Remove-Item $programcs -Force
