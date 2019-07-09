@@ -15,6 +15,13 @@ param(
 $ErrorActionPreference = "Stop"
 $PSDefaultParameterValues = @{"Disabled" = $true}
 
+
+
+#Uncomment to clear cached downloads.
+if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
+
+
+
 if (-not (Test-Path $OutputDirectory)) {
     New-Item $OutputDirectory -ItemType "Directory" -Force | Out-Null
 }
@@ -62,7 +69,7 @@ function getNugetPackage
 
 
 Write-Verbose "Get Roslyn C# and VB compilers."
-getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.1.0" -Sha512 "80031aac4e6174a978135cc89030f59a914618e75053c48893087809311106747e4eb6921c62ae093e0c12603851a72a4e59277c7f3c956c314c7cfc7b66c762"
+getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.1.1" -Sha512 "5431eb78941235cf1c711996b03034ec14f9698452e8c544080c2499cd6f0402e7c2e25b8b1f47ca6b949dd7d9918a6dcb68b9e91f8ca6c9adb821d049d43620"
 
 if ($Framework -eq "Core") {
     $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.0/tasks/netcoreapp2.1/bincore"
