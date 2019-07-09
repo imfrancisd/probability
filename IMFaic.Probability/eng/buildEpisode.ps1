@@ -65,6 +65,7 @@ $compilerArgs = @(&{
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
     "-target:library"
     "-warn:4"
+    "-warnaserror"
 })
 & $tools.csc @compilerArgs
 
@@ -86,6 +87,7 @@ $compilerArgs = @(&{
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
     "-target:library"
     "-warn:4"
+    "-warnaserror"
 })
 & $tools.csc @compilerArgs
 
@@ -140,6 +142,7 @@ foreach ($episodeId in $Episode) {
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
         "-warn:4"
+        "-warnaserror"
         $programcs
     })
     & $tools.csc @compilerArgs
