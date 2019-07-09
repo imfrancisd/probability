@@ -72,18 +72,18 @@ Write-Verbose "Get Roslyn C# and VB compilers."
 getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.1.1" -Sha512 "5431eb78941235cf1c711996b03034ec14f9698452e8c544080c2499cd6f0402e7c2e25b8b1f47ca6b949dd7d9918a6dcb68b9e91f8ca6c9adb821d049d43620"
 
 if ($Framework -eq "Core") {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.0/tasks/netcoreapp2.1/bincore"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/netcoreapp2.1/bincore"
     $tools.csc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "csc.dll") `$args")
     $tools.vbc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "vbc.dll") `$args")
 }
 elseif ($Framework -eq "Mono") {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.0/tasks/net472"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/net472"
     $tools.csc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "vbc.exe") `$args")
 }
 else {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.0/tasks/net472"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/net472"
     $tools.csc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "vbc.exe") `$args")
