@@ -64,6 +64,7 @@ $compilerArgs = @(&{
     "-recurse:$(Join-Path $PSScriptRoot "../prb/*.cs")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
     "-target:library"
+    "-warn:4"
 })
 & $tools.csc @compilerArgs
 
@@ -84,6 +85,7 @@ $compilerArgs = @(&{
     "-reference:$(Join-Path $objLibNetstandardDir "Probability.dll")"
     "-reference:$(Join-Path $tools.net "netstandard.dll")"
     "-target:library"
+    "-warn:4"
 })
 & $tools.csc @compilerArgs
 
@@ -107,9 +109,13 @@ foreach ($episodeId in $Episode) {
 
 
 
+    Write-Verbose "Compiling $($pkgLibNetstandardDir)."
+    Copy-Item $(Join-Path $objLibNetstandardDir "*") -Destination $pkgLibNetstandardDir
+
+
+
     Write-Verbose "Compiling $($pkgToolsNetstandardDir)."
 
-    Copy-Item $(Join-Path $objLibNetstandardDir "*") -Destination $pkgLibNetstandardDir
     Copy-Item $(Join-Path $objLibNetstandardDir "*") -Destination $pkgToolsNetstandardDir
 
     $programcs = Join-Path $pkgToolsNetstandardDir "Program.cs"
@@ -133,6 +139,7 @@ foreach ($episodeId in $Episode) {
         "-reference:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
+        "-warn:4"
         $programcs
     })
     & $tools.csc @compilerArgs
