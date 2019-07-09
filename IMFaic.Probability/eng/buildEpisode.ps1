@@ -135,7 +135,7 @@ foreach ($episodeId in $Episode) {
         "-nologo"
         "-nostdlib"
         "-optimize"
-        "-out:$(Join-Path $pkgToolsNetstandardDir "Program.exe")"
+        "-out:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")"
         "-reference:$(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.dll")"
         "-reference:$(Join-Path $tools.net "netstandard.dll")"
         "-target:exe"
@@ -146,7 +146,7 @@ foreach ($episodeId in $Episode) {
 
     #Rename Program.exe to IMFaic.Probability.exe instead of compiling as IMFaic.Probability.exe
     #to avoid TypeLoadException and MissingMethodException at runtime.
-    Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
+    #Move-Item $(Join-Path $pkgToolsNetstandardDir "Program.exe") $(Join-Path $pkgToolsNetstandardDir "IMFaic.Probability.exe")
 
     if ($episodeId -eq "25") {
         Copy-Item (Join-Path $PSScriptRoot "../src/Episodes/shakespeare.txt") -Destination $pkgToolsNetstandardDir
