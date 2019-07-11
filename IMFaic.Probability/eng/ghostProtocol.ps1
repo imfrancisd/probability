@@ -127,8 +127,9 @@ foreach ($branch in $faicBranches) {
                 return $false
             }
 
-            Add-Type -Path $(Join-Path $PSScriptRoot "../packages/microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472/Microsoft.CodeAnalysis.dll")
-            Add-Type -Path $(Join-Path $PSScriptRoot "../packages/microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472/Microsoft.CodeAnalysis.CSharp.dll")
+            $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
 
             $namespace = [Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText((Get-Content $filePath)).GetRoot().Members.FirstOrDefault()
             if (-not ($namespace -is [Microsoft.CodeAnalysis.CSharp.Syntax.NamespaceDeclarationSyntax])) {
@@ -151,6 +152,20 @@ foreach ($branch in $faicBranches) {
             if (($classModifiers -ccontains "private") -or ($classModifiers -ccontains "internal")) {
                 return $false
             }
+
+            $method = $class.Members.FirstOrDefault()
+            if (-not ($method.Identifier.Text -ceq "DoIt")) {
+                return $false
+            }
+
+            $methodModifiers = @($method.Modifiers | ForEach-Object {$_.Text})
+            if (-not ($methodModifiers -ccontains "static")) {
+                return $false
+            }
+            if (-not ($methodModifiers -ccontains "public")) {
+                return $false
+            }
+
 
             return $true
         }
