@@ -72,12 +72,6 @@ $faicBranches = @(
 
 
 
-$tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
-Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
-Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
-
-
-
 foreach ($branch in $faicBranches) {
     <####################################
     branch           episode   episode id
@@ -120,13 +114,17 @@ foreach ($branch in $faicBranches) {
 
         Write-Verbose "Creating `"$($srcFile)`"."
 
-        $hasEpisodeExample = & {
+        $hasEpisodeExample = & ([System.Diagnostics.Process]::GetCurrentProcess().Path) -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -Command {
             #FORESHADOW:
             #Check if all of the following exists:
             #    public static void DoIt() in
             #    public|protected static class Episode$($episode) in
             #    namespace Probability in
             #    Probability/Episode$($episode).cs
+
+            $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
 
             $filePath = Join-Path $PSScriptRoot "../../Probability/Episode$($episode).cs"
             if (-not (Test-Path $filePath)) {
