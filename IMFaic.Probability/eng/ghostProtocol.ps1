@@ -72,6 +72,12 @@ $faicBranches = @(
 
 
 
+$tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
+
+
+
 foreach ($branch in $faicBranches) {
     <####################################
     branch           episode   episode id
@@ -127,10 +133,6 @@ foreach ($branch in $faicBranches) {
                 return $false
             }
 
-            $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
-            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
-            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
-
             $namespace = [Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText((Get-Content $filePath)).GetRoot().Members.FirstOrDefault()
             if (-not ($namespace -is [Microsoft.CodeAnalysis.CSharp.Syntax.NamespaceDeclarationSyntax])) {
                 return $false
@@ -141,31 +143,34 @@ foreach ($branch in $faicBranches) {
             }
 
             $class = $namespace.Members.FirstOrDefault()
+            $classModifiers = @($class.Modifiers | ForEach-Object {$_.Text})
+            if (($classModifiers -ccontains "private") -or ($classModifiers -ccontains "internal")) {
+                return $false
+            }
+            if (-not ($classModifiers -ccontains "static")) {
+                return $false
+            }
             if (-not ($class.Identifier.Text -ceq "Episode$($episode)")) {
                 return $false
             }
 
-            $classModifiers = @($class.Modifiers | ForEach-Object {$_.Text})
-            if (-not ($classModifiers -ccontains "static")) {
-                return $false
-            }
-            if (($classModifiers -ccontains "private") -or ($classModifiers -ccontains "internal")) {
-                return $false
-            }
-
             $method = $class.Members.FirstOrDefault()
-            if (-not ($method.Identifier.Text -ceq "DoIt")) {
-                return $false
-            }
-
             $methodModifiers = @($method.Modifiers | ForEach-Object {$_.Text})
-            if (-not ($methodModifiers -ccontains "static")) {
-                return $false
-            }
             if (-not ($methodModifiers -ccontains "public")) {
                 return $false
             }
-
+            if (-not ($methodModifiers -ccontains "static")) {
+                return $false
+            }
+            if (-not ($method.ReturnType.ToString() -ceq "void")) {
+                return $false
+            }
+            if (-not ($method.Identifier.Text -ceq "DoIt")) {
+                return $false
+            }
+            if (-not ($method.Arity -eq 0)) {
+                return $false
+            }
 
             return $true
         }
