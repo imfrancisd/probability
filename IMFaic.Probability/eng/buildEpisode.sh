@@ -37,6 +37,9 @@ fi
 
 echo "Get build tools."
 
+#Uncomment to clear cached downloads.
+rm -rf "${SCRIPTROOT}/../packages"
+
 function getNugetPackage {
     echo "Get package \"${1}\" version \"${2}\" from \"https://www.nuget.org/\"."
 
@@ -64,10 +67,14 @@ function getNugetPackage {
     unzip "${PKGZIP}" -d "${PKGDIR}" 2>&1
 }
 
+
+
 echo "Get Roslyn C# and VB compilers."
 
-getNugetPackage "microsoft.net.compilers.toolset" "3.1.0" "80031aac4e6174a978135cc89030f59a914618e75053c48893087809311106747e4eb6921c62ae093e0c12603851a72a4e59277c7f3c956c314c7cfc7b66c762"
-CSCEXE="${SCRIPTROOT}/../packages/microsoft.net.compilers.toolset/3.1.0/tasks/net472/csc.exe"
+getNugetPackage "microsoft.net.compilers.toolset" "3.1.1" "5431eb78941235cf1c711996b03034ec14f9698452e8c544080c2499cd6f0402e7c2e25b8b1f47ca6b949dd7d9918a6dcb68b9e91f8ca6c9adb821d049d43620"
+CSCEXE="${SCRIPTROOT}/../packages/microsoft.net.compilers.toolset/3.1.1/tasks/net472/csc.exe"
+
+
 
 echo "Get .NET Standard reference assemblies."
 
@@ -126,7 +133,7 @@ mono "${CSCEXE}" \
 for EPISODENUMBER in "${EPISODE[@]}"
 do
 
-    echo "Build Episode${EPISODENUMBER}"
+    echo "Build Episode${EPISODENUMBER}."
 
     PKGLIBNETSTANDARDDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/lib/netstandard2.0"
     PKGTOOLSNETSTANDARDDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/tools/netstandard2.0"
