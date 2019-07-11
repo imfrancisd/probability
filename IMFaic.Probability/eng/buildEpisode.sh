@@ -38,7 +38,7 @@ fi
 echo "Get build tools."
 
 #Uncomment to clear cached downloads.
-rm -rf "${SCRIPTROOT}/../packages"
+#rm -rf "${SCRIPTROOT}/../packages"
 
 function getNugetPackage {
     echo "Get package \"${1}\" version \"${2}\" from \"https://www.nuget.org/\"."
