@@ -114,57 +114,64 @@ foreach ($branch in $faicBranches) {
 
         Write-Verbose "Creating `"$($srcFile)`"."
 
-        $hasEpisodeExample = & ([System.Diagnostics.Process]::GetCurrentProcess().Name) -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -Command "& {
-            `$tools = & `$(Join-Path $PSScriptRoot `"buildTools.ps1`") `$(Join-Path $PSScriptRoot `"../packages`") -Framework `$Framework
-            Add-Type -Path `$(Join-Path `$tools.roslyn `"Microsoft.CodeAnalysis.dll`")
-            Add-Type -Path `$(Join-Path `$tools.roslyn `"Microsoft.CodeAnalysis.CSharp.dll`")
+        $hasEpisodeExample = & ([System.Diagnostics.Process]::GetCurrentProcess().Name) -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -Command {
+            #FORESHADOW:
+            #Check if all of the following exists:
+            #    public static void DoIt() in
+            #    public|protected static class Episode$($episode) in
+            #    namespace Probability in
+            #    Probability/Episode$($episode).cs
 
-            `$filePath = Join-Path $PSScriptRoot `"../../Probability/Episode`$($episode).cs`"
-            if (-not (Test-Path `$filePath)) {
-                return `$false
-            }
+            $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
 
-            `$namespace = [Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText((Get-Content `$filePath)).GetRoot().Members.FirstOrDefault()
-            if (-not (`$namespace -is [Microsoft.CodeAnalysis.CSharp.Syntax.NamespaceDeclarationSyntax])) {
-                return `$false
-            }
-
-            if (-not (`$namespace.Name.Identifier.Text -ceq `"Probability`")) {
-                return `$false
+            $filePath = Join-Path $PSScriptRoot "../../Probability/Episode$($episode).cs"
+            if (-not (Test-Path $filePath)) {
+                return $false
             }
 
-            `$class = `$namespace.Members.FirstOrDefault()
-            `$classModifiers = @(`$class.Modifiers | ForEach-Object {`$_.Text})
-            if ((`$classModifiers -ccontains `"private`") -or (`$classModifiers -ccontains `"internal`")) {
-                return `$false
-            }
-            if (-not (`$classModifiers -ccontains `"static`")) {
-                return `$false
-            }
-            if (-not (`$class.Identifier.Text -ceq `"Episode`$($episode)`")) {
-                return `$false
+            $namespace = [Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText((Get-Content $filePath)).GetRoot().Members.FirstOrDefault()
+            if (-not ($namespace -is [Microsoft.CodeAnalysis.CSharp.Syntax.NamespaceDeclarationSyntax])) {
+                return $false
             }
 
-            `$method = `$class.Members.FirstOrDefault()
-            `$methodModifiers = @(`$method.Modifiers | ForEach-Object {`$_.Text})
-            if (-not (`$methodModifiers -ccontains `"public`")) {
-                return `$false
-            }
-            if (-not (`$methodModifiers -ccontains `"static`")) {
-                return `$false
-            }
-            if (-not (`$method.ReturnType.ToString() -ceq `"void`")) {
-                return `$false
-            }
-            if (-not (`$method.Identifier.Text -ceq `"DoIt`")) {
-                return `$false
-            }
-            if (-not (`$method.Arity -eq 0)) {
-                return `$false
+            if (-not ($namespace.Name.Identifier.Text -ceq "Probability")) {
+                return $false
             }
 
-            return `$true
-        }"
+            $class = $namespace.Members.FirstOrDefault()
+            $classModifiers = @($class.Modifiers | ForEach-Object {$_.Text})
+            if (($classModifiers -ccontains "private") -or ($classModifiers -ccontains "internal")) {
+                return $false
+            }
+            if (-not ($classModifiers -ccontains "static")) {
+                return $false
+            }
+            if (-not ($class.Identifier.Text -ceq "Episode$($episode)")) {
+                return $false
+            }
+
+            $method = $class.Members.FirstOrDefault()
+            $methodModifiers = @($method.Modifiers | ForEach-Object {$_.Text})
+            if (-not ($methodModifiers -ccontains "public")) {
+                return $false
+            }
+            if (-not ($methodModifiers -ccontains "static")) {
+                return $false
+            }
+            if (-not ($method.ReturnType.ToString() -ceq "void")) {
+                return $false
+            }
+            if (-not ($method.Identifier.Text -ceq "DoIt")) {
+                return $false
+            }
+            if (-not ($method.Arity -eq 0)) {
+                return $false
+            }
+
+            return $true
+        }
 
         @(
             "using System;"
