@@ -38,7 +38,7 @@ fi
 echo "Get build tools."
 
 #Uncomment to clear cached downloads.
-#rm -rf "${SCRIPTROOT}/../packages"
+rm -rf "${SCRIPTROOT}/../packages"
 
 function getNugetPackage {
     echo "Get package \"${1}\" version \"${2}\" from \"https://www.nuget.org/\"."
@@ -47,7 +47,7 @@ function getNugetPackage {
     PKGDIR="${SCRIPTROOT}/../packages/${1}/${2}"
     PKGZIP="${SCRIPTROOT}/../packages/${1}.${2}.nupkg.zip"
 
-    if [ ! -f ${PKGZIP} ] || [ "${3}" != "$(sha512sum "${PKGZIP}" | cut -d " " -f 1)" ]
+    if [[ (! -f ${PKGZIP}) || ( "${3}" != "$(sha512sum "${PKGZIP}" | cut -d " " -f 1)" ) ]]
     then
         wget -O "${PKGZIP}" "${PKGURI}" 2>&1
     fi
