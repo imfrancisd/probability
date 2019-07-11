@@ -18,7 +18,7 @@ $PSDefaultParameterValues = @{"Disabled" = $true}
 
 
 #Uncomment to clear cached downloads.
-#if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
+if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
 
 
 
@@ -69,21 +69,21 @@ function getNugetPackage
 
 
 Write-Verbose "Get Roslyn C# and VB compilers."
-getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.1.1" -Sha512 "5431eb78941235cf1c711996b03034ec14f9698452e8c544080c2499cd6f0402e7c2e25b8b1f47ca6b949dd7d9918a6dcb68b9e91f8ca6c9adb821d049d43620"
+getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.2.0-beta3-final" -Sha512 "5dc70327f192c76a40d65e68e95cc0057fcc29a3817c939c38118584295c0f3a1120ef0ee12873265721348dfd4aecaa7ea0e72968aaa1f09dde15f9dd11da92"
 
 if ($Framework -eq "Core") {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/netcoreapp2.1/bincore"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/netcoreapp2.1/bincore"
     $tools.csc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "csc.dll") `$args")
     $tools.vbc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "vbc.dll") `$args")
 }
 elseif ($Framework -eq "Mono") {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/net472"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472"
     $tools.csc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "vbc.exe") `$args")
 }
 else {
-    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.1.1/tasks/net472"
+    $tools.roslyn = Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472"
     $tools.csc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "vbc.exe") `$args")
