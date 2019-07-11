@@ -114,7 +114,7 @@ foreach ($branch in $faicBranches) {
 
         Write-Verbose "Creating `"$($srcFile)`"."
 
-        $hasEpisodeExample = & ([System.Diagnostics.Process]::GetCurrentProcess().Name) -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -Command {
+        $hasEpisodeExample = & ([System.Diagnostics.Process]::GetCurrentProcess().Path) -NoProfile -ExecutionPolicy RemoteSigned -NonInteractive -Command {
             #FORESHADOW:
             #Check if all of the following exists:
             #    public static void DoIt() in
