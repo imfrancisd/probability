@@ -49,7 +49,7 @@ foreach ($directory in @($objLibNetstandardDir)) {
 
 
 
-Write-Verbose "Compiling Probability.dll"
+Write-Verbose "Compiling Probability.dll."
 
 $compilerArgs = @(&{
     "-debug:pdbonly"
@@ -71,7 +71,7 @@ $compilerArgs = @(&{
 
 
 
-Write-Verbose "Compiling IMFaic.Probability.dll"
+Write-Verbose "Compiling IMFaic.Probability.dll."
 
 $compilerArgs = @(&{
     "-debug:pdbonly"

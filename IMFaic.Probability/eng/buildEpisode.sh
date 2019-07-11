@@ -76,14 +76,14 @@ NETSTANDARD="${SCRIPTROOT}/../packages/netstandard.library/2.0.3/build/netstanda
 
 
 
-OBJLIBDIR="${SCRIPTROOT}/../obj/lib"
+OBJLIBNETSTANDARDDIR="${SCRIPTROOT}/../obj/lib/netstandard2.0"
 
-rm -rf "${OBJLIBDIR}"
-mkdir -p "${OBJLIBDIR}"
+rm -rf "${OBJLIBNETSTANDARDDIR}"
+mkdir -p "${OBJLIBNETSTANDARDDIR}"
 
 
 
-echo "Compiling Probability.dll"
+echo "Compiling Probability.dll."
 
 mono "${CSCEXE}" \
 -debug:pdbonly \
@@ -92,16 +92,18 @@ mono "${CSCEXE}" \
 -nologo \
 -nostdlib \
 -optimize \
--out:"${OBJLIBDIR}/Probability.dll" \
--pdb:"${OBJLIBDIR}/Probability.pdb" \
+-out:"${OBJLIBNETSTANDARDDIR}/Probability.dll" \
+-pdb:"${OBJLIBNETSTANDARDDIR}/Probability.pdb" \
 -recurse:"${SCRIPTROOT}/../../Probability/*.cs" \
 -recurse:"${SCRIPTROOT}/../prb/*.cs" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
--target:"library"
+-target:"library" \
+-warn:4 \
+-warnaserror
 
 
 
-echo "Compiling IMFaic.Probability.dll"
+echo "Compiling IMFaic.Probability.dll."
 
 mono "${CSCEXE}" \
 -debug:pdbonly \
@@ -110,12 +112,14 @@ mono "${CSCEXE}" \
 -nologo \
 -nostdlib \
 -optimize \
--out:"${OBJLIBDIR}/IMFaic.Probability.dll" \
--pdb:"${OBJLIBDIR}/IMFaic.Probability.pdb" \
+-out:"${OBJLIBNETSTANDARDDIR}/IMFaic.Probability.dll" \
+-pdb:"${OBJLIBNETSTANDARDDIR}/IMFaic.Probability.pdb" \
 -recurse:"${SCRIPTROOT}/../src/*.cs" \
--reference:"${OBJLIBDIR}/Probability.dll" \
+-reference:"${OBJLIBNETSTANDARDDIR}/Probability.dll" \
 -reference:"${NETSTANDARD}/netstandard.dll" \
--target:"library"
+-target:"library" \
+-warn:4 \
+-warnaserror
 
 
 
@@ -124,16 +128,24 @@ do
 
     echo "Build Episode${EPISODENUMBER}"
 
-    PKGLIBDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/lib/netstandard2.0"
-    PKGTOOLSDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/tools/netstandard2.0"
+    PKGLIBNETSTANDARDDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/lib/netstandard2.0"
+    PKGTOOLSNETSTANDARDDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/tools/netstandard2.0"
+    PKGTOOLSNETCOREAPPDIR="${SCRIPTROOT}/../bin/IMFaic.Probability/${EPISODENUMBER}.1.0/tools/netcoreapp2.0"
 
-    rm -rf "${PKGTOOLSDIR}" "${PKGLIBDIR}"
-    mkdir -p "${PKGTOOLSDIR}" "${PKGLIBDIR}"
+    rm -rf "${PKGLIBNETSTANDARDDIR}" "${PKGTOOLSNETSTANDARDDIR}" "${PKGTOOLSNETCOREAPPDIR}"
+    mkdir -p "${PKGLIBNETSTANDARDDIR}" "${PKGTOOLSNETSTANDARDDIR}" "${PKGTOOLSNETCOREAPPDIR}"
 
-    cp "${OBJLIBDIR}/"* "${PKGLIBDIR}/"
-    cp "${OBJLIBDIR}/"* "${PKGTOOLSDIR}/"
 
-    PROGRAMCS="${PKGTOOLSDIR}/Program.cs"
+
+    echo "Compiling ${PKGLIBNETSTANDARDDIR}."
+    cp "${OBJLIBNETSTANDARDDIR}/"* "${PKGLIBNETSTANDARDDIR}/"
+
+
+
+    echo "Compiling ${PKGTOOLSNETSTANDARDDIR}."
+    cp "${OBJLIBNETSTANDARDDIR}/"* "${PKGTOOLSNETSTANDARDDIR}/"
+
+    PROGRAMCS="${PKGTOOLSNETSTANDARDDIR}/Program.cs"
     echo "
     public class Program
     {
@@ -144,29 +156,90 @@ do
     }
     " > "${PROGRAMCS}"
 
-
-
-    echo "Compiling IMFaic.Probability.exe"
-
     mono "${CSCEXE}" \
     -deterministic \
     -noconfig \
     -nologo \
     -nostdlib \
     -optimize \
-    -out:"${PKGTOOLSDIR}/Program.exe" \
-    -reference:"${PKGTOOLSDIR}/IMFaic.Probability.dll" \
+    -out:"${PKGTOOLSNETSTANDARDDIR}/Program.exe" \
+    -reference:"${PKGTOOLSNETSTANDARDDIR}/IMFaic.Probability.dll" \
     -reference:"${NETSTANDARD}/netstandard.dll" \
     -target:"exe" \
+    -warn:4 \
+    -warnaserror \
     "${PROGRAMCS}"
 
-    mv "${PKGTOOLSDIR}/Program.exe" "${PKGTOOLSDIR}/IMFaic.Probability.exe"
+    #Rename Program.exe to IMFaic.Probability.exe instead of compiling as IMFaic.Probability.exe
+    #to avoid TypeLoadException and MissingMethodException at runtime.
+    mv "${PKGTOOLSNETSTANDARDDIR}/Program.exe" "${PKGTOOLSNETSTANDARDDIR}/IMFaic.Probability.exe"
 
     if [ "${EPISODENUMBER}" == "25" ]
     then
-        cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${PKGTOOLSDIR}/"
+        cp "${SCRIPTROOT}/../src/Episodes/shakespeare.txt" "${PKGTOOLSNETSTANDARDDIR}/"
     fi
 
     rm -rf "${PROGRAMCS}"
+
+
+
+    echo "Compiling ${PKGTOOLSNETCOREAPPDIR}."
+    cp "${PKGTOOLSNETSTANDARDDIR}/"* "${PKGTOOLSNETCOREAPPDIR}/"
+    mv "${PKGTOOLSNETCOREAPPDIR}/IMFaic.Probability.exe" "${PKGTOOLSNETCOREAPPDIR}/IMFaic.Probability.exe.dll"
+
+    echo "
+    {
+      \"runtimeOptions\": {
+        \"framework\": {
+          \"name\": \"Microsoft.NETCore.App\",
+          \"version\": \"2.0.0\"
+        }
+      }
+    }
+    " > "${PKGTOOLSNETCOREAPPDIR}/IMFaic.Probability.exe.runtimeconfig.json"
+
+    echo "
+    {
+      \"runtimeTarget\": {
+        \"name\": \".NETCoreApp,Version=v2.0\"
+      },
+      \"targets\": {
+        \".NETCoreApp,Version=v2.0\": {
+          \"IMFaic.Probability.exe\": {
+            \"runtime\": {
+              \"IMFaic.Probability.exe.dll\": {}
+            }
+          },
+          \"Probability\": {
+            \"runtime\": {
+              \"Probability.dll\": {}
+            }
+          },
+          \"IMFaic.Probability\": {
+            \"runtime\": {
+              \"IMFaic.Probability.dll\": {}
+            }
+          }
+        }
+      },
+      \"libraries\": {
+        \"IMFaic.Probability.exe\": {
+          \"type\": \"project\",
+          \"serviceable\": false,
+          \"sha512\": \"\"
+        },
+        \"Probability\": {
+          \"type\": \"project\",
+          \"serviceable\": false,
+          \"sha512\": \"\"
+        },
+        \"IMFaic.Probability\": {
+          \"type\": \"project\",
+          \"serviceable\": false,
+          \"sha512\": \"\"
+        }
+      }
+    }
+    " > "${PKGTOOLSNETCOREAPPDIR}/IMFaic.Probability.exe.deps.json"
 
 done
