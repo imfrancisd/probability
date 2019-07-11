@@ -15,7 +15,11 @@ param(
     $FaicUrl = "https://github.com/ericlippert/probability.git",
 
     [switch]
-    $PushChanges
+    $PushChanges,
+
+    [ValidateSet("Core", "Mono", "Net")]
+    [string]
+    $Framework = "Net"
 )
 
 $ErrorActionPreference = "Stop"
@@ -117,7 +121,13 @@ foreach ($branch in $faicBranches) {
             #    public|protected static class Episode$($episode) in
             #    namespace Probability in
             #    Probability/Episode$($episode).cs
-            Test-Path (Join-Path $PSScriptRoot "../../Probability/Episode$($episode).cs")
+
+            $filePath = Join-Path $PSScriptRoot "../../Probability/Episode$($episode).cs"
+            if (-not (Test-Path $filePath)) {
+                return $false
+            }
+
+            return $true
         }
 
         @(
