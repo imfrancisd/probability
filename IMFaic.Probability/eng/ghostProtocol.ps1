@@ -127,6 +127,19 @@ foreach ($branch in $faicBranches) {
                 return $false
             }
 
+            $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+            Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
+
+            $namespace = [Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree]::ParseText((Get-Content $filePath)).GetRoot().Members.FirstOrDefault()
+            if (-not ($namespace -is [Microsoft.CodeAnalysis.CSharp.Syntax.NamespaceDeclarationSyntax])) {
+                return $false
+            }
+
+            if (-not ($namespace.Name.Identifier.Text -ceq "Probability")) {
+                return $false
+            }
+
             return $true
         }
 
