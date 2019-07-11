@@ -41,6 +41,8 @@ echo "Get build tools."
 rm -rf "${SCRIPTROOT}/../packages"
 
 function getNugetPackage {
+    mkdir -p "${SCRIPTROOT}/../packages"
+
     echo "Get package \"${1}\" version \"${2}\" from \"https://www.nuget.org/\"."
 
     PKGURI="https://www.nuget.org/api/v2/package/${1}/${2}"
