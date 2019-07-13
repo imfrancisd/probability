@@ -58,12 +58,10 @@ function getNugetPackage
         throw "Could not get package `"$($Name)`" version `"$($Version)`" (downloaded file does not have the expected sha512 sum)."
     }
 
-    if (Test-Path $pkgDir) {
-        Remove-Item $pkgDir -Recurse -Force
+    if (-not (Test-Path $pkgDir)) {
+        New-Item $pkgDir -ItemType "Directory" -Force | Out-Null
+        Expand-Archive $pkgZip -DestinationPath $pkgDir
     }
-
-    New-Item $pkgDir -ItemType "Directory" -Force | Out-Null
-    Expand-Archive $pkgZip -DestinationPath $pkgDir
 }
 
 
