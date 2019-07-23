@@ -72,9 +72,15 @@ $faicBranches = @(
 
 
 
-$tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
-Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
-Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
+if (Test-Path "$($PSHOME)/Microsoft.CodeAnalysis.dll") {
+    Add-Type -Path $(Join-Path $PSHOME "Microsoft.CodeAnalysis.dll")
+    Add-Type -Path $(Join-Path $PSHOME "Microsoft.CodeAnalysis.CSharp.dll")
+}
+else {
+    $tools = & $(Join-Path $PSScriptRoot "buildTools.ps1") $(Join-Path $PSScriptRoot "../packages") -Framework $Framework
+    Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.dll")
+    Add-Type -Path $(Join-Path $tools.roslyn "Microsoft.CodeAnalysis.CSharp.dll")
+}
 
 
 
