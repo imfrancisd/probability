@@ -92,7 +92,7 @@ else {
 Write-Verbose "Get .NET Standard reference assemblies."
 getNugetPackage -Name "netstandard.library" -Version "2.0.3" -Sha512 "e78f0cea69c14895b1b089644077dbce8631a626055d96522f4d29e061d8bfc3e48aa1419e74faf265b998612c03f721f5f0cef4690f824150a5689764dee601"
 
-$tools.netstandard = Join-Path $OutputDirectory "netstandard.library/2.0.3/build/netstandard2.0/ref"
+$tools.netstandard = (Resolve-Path (Join-Path $OutputDirectory "netstandard.library/2.0.3/build/netstandard2.0/ref")).Path
 $tools.net = $tools.netstandard
 
 
