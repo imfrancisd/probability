@@ -67,8 +67,7 @@ function getNugetPackage
 
 
 Write-Verbose "Get Roslyn C# and VB compilers."
-getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.2.0-beta4-final" -Sha512 "96da0a7dd10ac8209b759a331aa10edbb38fe4cd6695ad5c7203f1d9221f9e9137ca282033e780722f53a655c849ce26805319353d6daf3ee485d32e87a4a576
-"
+getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.2.0-beta4-final" -Sha512 "96da0a7dd10ac8209b759a331aa10edbb38fe4cd6695ad5c7203f1d9221f9e9137ca282033e780722f53a655c849ce26805319353d6daf3ee485d32e87a4a576"
 
 if ($Framework -eq "Core") {
     $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta4-final/tasks/netcoreapp2.1/bincore")).Path
