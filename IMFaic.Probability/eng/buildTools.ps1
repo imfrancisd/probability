@@ -18,7 +18,7 @@ $PSDefaultParameterValues = @{"Disabled" = $true}
 
 
 #Uncomment to clear cached downloads.
-#if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
+if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
 
 
 
@@ -67,21 +67,22 @@ function getNugetPackage
 
 
 Write-Verbose "Get Roslyn C# and VB compilers."
-getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.2.0-beta3-final" -Sha512 "5dc70327f192c76a40d65e68e95cc0057fcc29a3817c939c38118584295c0f3a1120ef0ee12873265721348dfd4aecaa7ea0e72968aaa1f09dde15f9dd11da92"
+getNugetPackage -Name "microsoft.net.compilers.toolset" -Version "3.2.0-beta4-final" -Sha512 "96da0a7dd10ac8209b759a331aa10edbb38fe4cd6695ad5c7203f1d9221f9e9137ca282033e780722f53a655c849ce26805319353d6daf3ee485d32e87a4a576
+"
 
 if ($Framework -eq "Core") {
-    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/netcoreapp2.1/bincore")).Path
+    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta4-final/tasks/netcoreapp2.1/bincore")).Path
     $tools.csc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "csc.dll") `$args")
     $tools.vbc = [scriptblock]::Create("dotnet $(Join-Path $tools.roslyn "vbc.dll") `$args")
 }
 elseif ($Framework -eq "Mono") {
-    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472")).Path
+    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta4-final/tasks/net472")).Path
     $tools.csc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("mono $(Join-Path $tools.roslyn "vbc.exe") `$args")
 }
 else {
-    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta3-final/tasks/net472")).Path
+    $tools.roslyn = (Resolve-Path (Join-Path $OutputDirectory "microsoft.net.compilers.toolset/3.2.0-beta4-final/tasks/net472")).Path
     $tools.csc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csc.exe") `$args")
     $tools.csi = [scriptblock]::Create("& $(Join-Path $tools.roslyn "csi.exe") `$args")
     $tools.vbc = [scriptblock]::Create("& $(Join-Path $tools.roslyn "vbc.exe") `$args")
