@@ -18,7 +18,7 @@ $PSDefaultParameterValues = @{"Disabled" = $true}
 
 
 #Uncomment to clear cached downloads.
-if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
+#if (Test-Path $OutputDirectory) {Remove-Item $OutputDirectory -Recurse -Force}
 
 
 
