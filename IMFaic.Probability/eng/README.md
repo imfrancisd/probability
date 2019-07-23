@@ -107,11 +107,11 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 
 **Reconnaissance**
 
-|                  | **dotnet-reconnaissance** |
-| ---------------- | ------------------------- |
-| **Status**       | complete                  |
-| **Schedule**     | never                     |
-| **Description**  | get dotnet build output   |
-| **OS**           | Ubuntu                    |
-| **Shell**        | bash                      |
-| **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=9&_a=summary) |
+|                  | **dotnet-reconnaissance** | **pwsh-reconnaissance**   |
+| ---------------- | ------------------------- | ------------------------- |
+| **Status**       | complete                  | complete                  |
+| **Schedule**     | never                     | never                     |
+| **Description**  | get dotnet build output   | get pwsh dll files        |
+| **OS**           | Ubuntu                    | Windows                   |
+| **Shell**        | bash                      | powershell, pwsh          |
+| **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=9&_a=summary) | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=10&_a=summary) |
