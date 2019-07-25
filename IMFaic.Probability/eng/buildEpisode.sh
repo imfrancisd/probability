@@ -60,7 +60,7 @@ function getNugetPackage {
         exit 1
     fi
 
-    if [ -f ${PKGDIR} ]
+    if [ -d ${PKGDIR} ]
     then
         rm -rf ${PKGDIR}
     fi

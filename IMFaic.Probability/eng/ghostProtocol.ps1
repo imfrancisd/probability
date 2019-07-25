@@ -72,7 +72,7 @@ $faicBranches = @(
 
 
 
-if (Test-Path "$($PSHOME)/Microsoft.CodeAnalysis.dll") {
+if (Test-Path (Join-Path $PSHOME "Microsoft.CodeAnalysis.dll")) {
     Add-Type -Path $(Join-Path $PSHOME "Microsoft.CodeAnalysis.dll")
     Add-Type -Path $(Join-Path $PSHOME "Microsoft.CodeAnalysis.CSharp.dll")
 }
@@ -111,7 +111,7 @@ foreach ($branch in $faicBranches) {
     }
 
     $episode = ($branch -replace "^episode", "")
-    $episodeId = $episode -as [double]
+    $episodeId = $episode -as [decimal]
     if ($null -eq $episodeId) {
         $episodeId = $episode
     }
