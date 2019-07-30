@@ -115,3 +115,4 @@ https://ci.appveyor.com/project/imfrancisd/probability-62n01/branch/imfrancisd/m
 | **OS**           | Ubuntu                    | Windows                   |
 | **Shell**        | bash                      | powershell, pwsh          |
 | **Links**        | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=9&_a=summary) | [build](https://dev.azure.com/imfrancisd/IMFaic.Probability/_build?definitionId=10&_a=summary) |
+
