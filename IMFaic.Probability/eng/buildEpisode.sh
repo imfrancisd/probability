@@ -38,7 +38,7 @@ fi
 echo "Get build tools."
 
 #Uncomment to clear cached downloads.
-#rm -rf "${SCRIPTROOT}/../packages"
+rm -rf "${SCRIPTROOT}/../packages"
 
 function getNugetPackage {
     mkdir -p "${SCRIPTROOT}/../packages"
@@ -73,8 +73,8 @@ function getNugetPackage {
 
 echo "Get Roslyn C# and VB compilers."
 
-getNugetPackage "microsoft.net.compilers.toolset" "3.2.0-beta4-final" "96da0a7dd10ac8209b759a331aa10edbb38fe4cd6695ad5c7203f1d9221f9e9137ca282033e780722f53a655c849ce26805319353d6daf3ee485d32e87a4a576"
-CSCEXE="${SCRIPTROOT}/../packages/microsoft.net.compilers.toolset/3.2.0-beta4-final/tasks/net472/csc.exe"
+getNugetPackage "microsoft.net.compilers.toolset" "3.3.0-beta1-final" "08472200e524952672f8d8ac7969071a1f09c0e2db6eca5b43955178154cb6e4290157a619e20a3cd5b020bb1dfbeaa0d2ff97222c4c3936cd2eb8b5eece0727"
+CSCEXE="${SCRIPTROOT}/../packages/microsoft.net.compilers.toolset/3.3.0-beta1-final/tasks/net472/csc.exe"
 
 
 
